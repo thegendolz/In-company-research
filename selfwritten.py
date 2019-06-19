@@ -9,7 +9,7 @@ img = [[0, 1, 5, 12, 1],
        [0, 1, 5, 12, 1],
        [0, 1, 5, 12, 1],
        [0, 1, 3, 2, 1]] 
-imgNodeId = [np.zeros((5,5))]
+imgNodeId = []
 id = -1
 width = 5
 height = 5
@@ -27,40 +27,65 @@ def initialize():
     #img.show()
 
 def addEmptyLevel(level, width, height):
-    #imgNodeId.append(np.zeros(width, height))
-
-    for n in range(0, width):
-        for m in range(0, height):
-            imgNodeId[level][m, n] = -1
-    print(imgNodeId[0])
+    if level == 0: imgNodeId.append(np.zeros((width, height)))
+    else: imgNodeId.append(imgNodeId[level-1])
+    print(imgNodeId)
+    for m in range(0, width):
+        for n in range(0, height):
+            imgNodeId[level][n, m] = -1
 
 def initializationAlphatree(width, height):
     rootNotReached = True;
     ACC = 0
     while rootNotReached: #As long as root is not reached, keep going with a lower alpha-cc
+
+        if ACC==3: rootNotReached = False
         for m in range(0, width):
             for n in range(0, height):
-                lookForNeighbours(m, n, ACC, 4, width, height)
+                lookForNeighbours(n, m, ACC, 4, width, height)
 
-        rootNotReached = False
-        print(imgNodeId[0])
+        #print(imgNodeId[ACC])
         ACC+=1
+        addEmptyLevel(ACC, 5, 5)
 
-def lookForNeighbours(m, n, alpha, CNNType, width, height):
+def lookForNeighbours(n, m, alpha, CNNType, width, height):
     if(CNNType == 4):
-        if m-1 > 0 and abs(img[m][n] - img[m - 1][n]) <= alpha: addToNode(alpha, m-1, n, m, n)
-        if m + 1 < width and abs(img[m][n] - img[m + 1][n]) <= alpha: addToNode(alpha, m+1, n, m, n)
-        if n+1 < height and abs(img[m][n] - img[m][n + 1]) <= alpha: addToNode(alpha, m, n+1, m, n)
-        if n-1 > 0 and abs(img[m][n] - img[m][n - 1]) <= alpha: addToNode(alpha, m, n-1, m, n)
+        directions = []
+        if m - 1 >= 0 and abs(img[n][m] - img[n][m - 1]) <= alpha: directions.append('l')
+        if m + 1 < width and abs(img[n][m] - img[n][m + 1]) <= alpha: directions.append('r')
+        if n + 1 < height and abs(img[n][m] - img[n + 1][m]) <= alpha: directions.append('d')
+        if n - 1 >= 0 and abs(img[n][m] - img[n - 1][m]) <= alpha: directions.append('u')
+        #print(directions, n, m)
+        updateNode(alpha, n, m, directions)
+        #print(imgNodeId[0])
 
-def addToNode(level, m, n, x, y):
-    if imgNodeId[level][x, y] == -1 and imgNodeId[level][m, n] == -1:
+def updateNode(level, n, m, directions):
+    x = -1; y = -1
+    for direction in directions:
+        if direction == 'l':
+            x = n
+            y = m - 1
+        if direction == 'r':
+            x = n
+            y = m + 1
+        if direction == 'd':
+            x = n + 1
+            y = m
+        if direction == 'u':
+            x = n - 1
+            y = m
+
+    print(level)
+    if (x == -1 and y == -1) or (imgNodeId[level][n, m] == -1 and imgNodeId[level][x, y] == -1):
         id = createNode()
-        imgNodeId[level][x, y] = id
-    elif imgNodeId[level][x, y] == -1 and imgNodeId[level][m, n] != -1:
-        imgNodeId[level][x, y] = imgNodeId[level][m, n]
-    elif imgNodeId[level][x, y] != imgNodeId[level][m, n]:
-        mergeNode(level, imgNodeId[level][x, y], imgNodeId[level][m, n])
+        imgNodeId[level][n, m] = id
+        #print("new node")
+    elif imgNodeId[level][n, m] == -1 and imgNodeId[level][x, y] != -1:
+        #print("copy")
+        imgNodeId[level][n, m] = imgNodeId[level][x, y]
+    else:
+        print("merge")
+        mergeNode(level, imgNodeId[level][n, m], imgNodeId[level][x, y])
 
 def createNode():
     global id
@@ -70,12 +95,6 @@ def createNode():
 def mergeNode(level, Node_1_id, Node_2_id):
     for m in range(0, width):
         for n in range(0, height):
-            if imgNodeId[level][m, n] == Node_2_id : imgNodeId[level][m, n] = Node_1_id
+            if imgNodeId[level][n, m] == Node_2_id : imgNodeId[level][n, m] = Node_1_id
 
 initialize()
-
-
-
-
-
-
