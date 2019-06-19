@@ -9,13 +9,14 @@ Parent = []
 #       [0, 1, 5, 12, 1],
 #       [0, 1, 5, 12, 1],
 #       [0, 1, 3, 2, 1]]
+img = []
 imgNodeId = []
 id = 0
 width = 5
 height = 5
 
 def initialize():
-    #img = Image.open('image_1.jpg')
+    img = Image.open('example_1.png')
     #width, height = img.size;
     id = 0
     addEmptyLevel(0, width, height)
@@ -23,7 +24,7 @@ def initialize():
     ## Initialization of the alpha tree itself
     initializationAlphatree(width, height)
 
-    #img.show()
+    img.show()
 
 def addEmptyLevel(level, width, height):
     if level == 0:
@@ -86,8 +87,6 @@ def updateNode(level, n, m, directions):
         if direction == 'u':
             x = n - 1
             y = m
-
-
     #print(level)
     #print(imgNodeId[level][n, m])
     if (x == -1 and y == -1) or (imgNodeId[level][n, m] == -1 and imgNodeId[level][x, y] == -1):
