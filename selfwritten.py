@@ -2,33 +2,32 @@ import alphathree
 import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
+import time
+from scipy.spatial import distance
 
 Parent = []
-#img = [[0, 1, 5, 12, 1],
-#       [0, 1, 5, 12, 1],
-#       [0, 1, 5, 12, 1],
-#       [0, 1, 5, 12, 1],
-#       [0, 1, 3, 2, 1]]
-img = []
+getImage = Image.open('example_1.png')
+img = np.asarray(getImage.convert('HSV'))
 imgNodeId = []
 id = 0
-width = 5
-height = 5
+width, height = getImage.size;
 
 def initialize():
-    img = Image.open('example_1.png')
-    #width, height = img.size;
-    id = 0
-    addEmptyLevel(0, width, height)
+    start = time.time()
+    addEmptyLevel(id)
 
     ## Initialization of the alpha tree itself
     initializationAlphatree(width, height)
 
-    img.show()
+    #getImage.show()
 
-def addEmptyLevel(level, width, height):
+    end = time.time()
+
+    print("Execution time:", end - start, "seconds")
+
+def addEmptyLevel(level):
     if level == 0:
-        imgNodeId.append(np.zeros((width, height)))
+        imgNodeId.append(np.zeros((height, width)))
         for m in range(0, width):
             for n in range(0, height):
                 imgNodeId[level][n, m] = -1
@@ -40,16 +39,20 @@ def initializationAlphatree(width, height):
     ACC = 0
     while rootNotReached: #As long as root is not reached, keep going with a lower alpha-cc
 
-        if ACC==3: rootNotReached = False
         for m in range(0, width):
             for n in range(0, height):
                 lookForNeighbours(n, m, ACC, 4, width, height)
 
-        reorganize(ACC)
+        #reorganize(ACC)
 
+        print("ACC")
         #print(imgNodeId[ACC])
-        ACC+=1
-        addEmptyLevel(ACC, 5, 5)
+        if ACC == 1:
+            rootNotReached = False
+            #img.show()
+
+        ACC += 1
+        addEmptyLevel(ACC)
 
 def reorganize(level):
     id = 1
@@ -63,14 +66,17 @@ def reorganize(level):
 
 def lookForNeighbours(n, m, alpha, CNNType, width, height):
     if(CNNType == 4):
+        #print(n, m)
         directions = []
-        if m - 1 >= 0 and abs(img[n][m] - img[n][m - 1]) <= alpha: directions.append('l')
-        if m + 1 < width and abs(img[n][m] - img[n][m + 1]) <= alpha: directions.append('r')
-        if n + 1 < height and abs(img[n][m] - img[n + 1][m]) <= alpha: directions.append('d')
-        if n - 1 >= 0 and abs(img[n][m] - img[n - 1][m]) <= alpha: directions.append('u')
-        #print(directions, n, m)
+        if m - 1 >= 0 and getDistance(img[n][m], img[n][m - 1]) <= alpha: directions.append('l')
+        if m + 1 < width and getDistance(img[n][m], img[n][m + 1]) <= alpha: directions.append('r')
+        if n + 1 < height and getDistance(img[n][m],img[n + 1][m]) <= alpha: directions.append('d')
+        if n - 1 >= 0 and getDistance(img[n][m], img[n - 1][m]) <= alpha: directions.append('u')
         updateNode(alpha, n, m, directions)
-        #print(imgNodeId[0])
+
+def getDistance(obj1, obj2):
+    distance = abs(obj1[0] - (int(obj1[0]) + int(obj2[0])) / 2)
+    return distance
 
 def updateNode(level, n, m, directions):
     x = -1; y = -1
@@ -87,14 +93,11 @@ def updateNode(level, n, m, directions):
         if direction == 'u':
             x = n - 1
             y = m
-    #print(level)
-    #print(imgNodeId[level][n, m])
+
     if (x == -1 and y == -1) or (imgNodeId[level][n, m] == -1 and imgNodeId[level][x, y] == -1):
         id = createNode()
         imgNodeId[level][n, m] = id
-        #print("new node")
     elif imgNodeId[level][n, m] == -1 and imgNodeId[level][x, y] != -1:
-        #print("copy")
         imgNodeId[level][n, m] = imgNodeId[level][x, y]
     else:
         for direction in directions:
