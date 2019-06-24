@@ -6,11 +6,20 @@ import time
 from scipy.spatial import distance
 
 Parent = []
-getImage = Image.open('example_1.png')
-img = np.asarray(getImage.convert('HSV'))
+Merges = []
+#getImage = Image.open('example_1.png')
+#img = np.asarray(getImage.convert('HSV'))
+#swidth, height = getImage.size
+img = [[0, 1, 1, 1, 6],
+       [12, 1, 1, 26, 6],
+       [0, 1, 9, 1, 6],
+       [0, 1, 12, 1, 6],
+       [0, 1, 1, 1, 6]]
+
+width, height = 5, 5
 imgNodeId = []
+
 id = 0
-width, height = getImage.size;
 
 def initialize():
     start = time.time()
@@ -18,7 +27,8 @@ def initialize():
 
     ## Initialization of the alpha tree itself
     initializationAlphatree(width, height)
-
+    print(Merges)
+    #addAlphaLayers()
     #getImage.show()
 
     end = time.time()
@@ -36,23 +46,40 @@ def addEmptyLevel(level):
 
 def initializationAlphatree(width, height):
     rootNotReached = True;
-    ACC = 0
-    while rootNotReached: #As long as root is not reached, keep going with a lower alpha-cc
 
+    a = time.time()
+    for m in range(0, width):
+        for n in range(0, height):
+            lookForNeighbours(n, m, 0, 4, width, height)
+    #reorganize(ACC)
+
+    print(imgNodeId[0])
+    b = time.time()
+    print("Execution time for loop:", b - a, "seconds")
+
+
+def addAlphaLayers():
+    ACC = 1
+    a = time.time()
+    while rootNotReached:
+        addEmptyLevel(ACC)
+        #for merge in uniques:
+
+        # As long as root is not reached, keep going with a lower alpha-cc
         for m in range(0, width):
             for n in range(0, height):
-                lookForNeighbours(n, m, ACC, 4, width, height)
+                if hasDifferentValue(n, m)
 
-        #reorganize(ACC)
 
-        print("ACC")
-        #print(imgNodeId[ACC])
+        # print(imgNodeId[ACC])
         if ACC == 1:
             rootNotReached = False
-            #img.show()
+            b = time.time()
+            print("Alpha level:", ACC, "execution time:", b - a, "seconds")
+            exit(1)
+            # img.show()
 
-        ACC += 1
-        addEmptyLevel(ACC)
+def
 
 def reorganize(level):
     id = 1
@@ -75,36 +102,49 @@ def lookForNeighbours(n, m, alpha, CNNType, width, height):
         updateNode(alpha, n, m, directions)
 
 def getDistance(obj1, obj2):
-    distance = abs(obj1[0] - (int(obj1[0]) + int(obj2[0])) / 2)
+    #distance = abs(obj1[0] - (int(obj1[0]) + int(obj2[0])) / 2)
+    distance = abs(obj1 - obj2)
     return distance
 
 def updateNode(level, n, m, directions):
     x = -1; y = -1
+    newDir = []
     for direction in directions:
-        if direction == 'l':
-            x = n
-            y = m - 1
-        if direction == 'r':
+        if direction == 'r' and imgNodeId[level][n, m+1] != -1:
             x = n
             y = m + 1
-        if direction == 'd':
+            newDir.append('r')
+        if direction == 'l' and imgNodeId[level][n, m-1] != -1:
+            x = n
+            y = m - 1
+            newDir.append('l')
+        if direction == 'd' and imgNodeId[level][n+1, m] != -1:
             x = n + 1
             y = m
-        if direction == 'u':
+            newDir.append('d')
+        if direction == 'u' and imgNodeId[level][n - 1, m] != -1:
             x = n - 1
             y = m
+            newDir.append('d')
 
-    if (x == -1 and y == -1) or (imgNodeId[level][n, m] == -1 and imgNodeId[level][x, y] == -1):
+    if len(directions) == 0 or (imgNodeId[level][n, m] == -1 and imgNodeId[level][x, y] == -1) and len(newDir) == 0:
         id = createNode()
+        Merges.append([id, img[n][m], img[n][m]])
         imgNodeId[level][n, m] = id
-    elif imgNodeId[level][n, m] == -1 and imgNodeId[level][x, y] != -1:
+    elif imgNodeId[level][n, m] == -1 and imgNodeId[level][x, y] != -1 and len(newDir) < 2:
         imgNodeId[level][n, m] = imgNodeId[level][x, y]
     else:
-        for direction in directions:
-            if direction == 'l':  mergeNode(level, imgNodeId[level][n, m], imgNodeId[level][n, m-1])
-            if direction == 'r':  mergeNode(level, imgNodeId[level][n, m], imgNodeId[level][n, m+1])
-            if direction == 'd':  mergeNode(level, imgNodeId[level][n, m], imgNodeId[level][n+1, m])
-            if direction == 'u':  mergeNode(level, imgNodeId[level][n, m], imgNodeId[level][n-1, m])
+        imgNodeId[level][n, m] = imgNodeId[level][x, y]
+        for direction in newDir:
+            if direction == 'l':
+                mergeNode(level, imgNodeId[level][n, m-1], imgNodeId[level][n, m])
+            elif direction == 'r':
+                mergeNode(level, imgNodeId[level][n, m+1], imgNodeId[level][n, m])
+            elif direction == 'd':
+                mergeNode(level, imgNodeId[level][n+1, m], imgNodeId[level][n, m])
+            elif direction == 'u':
+                mergeNode(level, imgNodeId[level][n-1, m], imgNodeId[level][n, m])
+            break
 
 def createNode():
     global id

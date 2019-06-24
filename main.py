@@ -23,7 +23,7 @@ def initializationAlphatree(at, NodeMMG, img, p, q, dir):
 
     for p in(p <= img.size-1):
         create_set(p)
-        for q
+       # for q
 
 def create_set(p):
     Parent[p] = -1
