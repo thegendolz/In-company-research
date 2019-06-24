@@ -27,8 +27,8 @@ def initialize():
 
     ## Initialization of the alpha tree itself
     initializationAlphatree(width, height)
-    print(Merges)
-    #addAlphaLayers()
+    #print(Merges)
+    addAlphaLayers()
     #getImage.show()
 
     end = time.time()
@@ -36,6 +36,7 @@ def initialize():
     print("Execution time:", end - start, "seconds")
 
 def addEmptyLevel(level):
+    Merges.append([])
     if level == 0:
         imgNodeId.append(np.zeros((height, width)))
         for m in range(0, width):
@@ -45,7 +46,6 @@ def addEmptyLevel(level):
         imgNodeId.append(imgNodeId[level-1])
 
 def initializationAlphatree(width, height):
-    rootNotReached = True;
 
     a = time.time()
     for m in range(0, width):
@@ -60,6 +60,7 @@ def initializationAlphatree(width, height):
 
 def addAlphaLayers():
     ACC = 1
+    rootNotReached = True
     a = time.time()
     while rootNotReached:
         addEmptyLevel(ACC)
@@ -68,18 +69,24 @@ def addAlphaLayers():
         # As long as root is not reached, keep going with a lower alpha-cc
         for m in range(0, width):
             for n in range(0, height):
-                if hasDifferentValue(n, m)
+                if m < width-1:
+                    if imgNodeId[ACC][n, m+1] != imgNodeId[ACC][n, m] and getDistance(img[n][m], img[n][m + 1]) <= ACC:
+                        Merges[ACC].append([imgNodeId[ACC][n, m+1],  imgNodeId[ACC][n, m]])
+                        mergeNode(ACC, imgNodeId[ACC][n, m+1], imgNodeId[ACC][n, m])
+                if n < height-1:
+                    if imgNodeId[ACC][n+1, m] != imgNodeId[ACC][n, m] and getDistance(img[n][m], img[n + 1][m]) <= ACC:
+                        Merges[ACC].append([imgNodeId[ACC][n+1, m],  imgNodeId[ACC][n, m]])
+                        mergeNode(ACC, imgNodeId[ACC][n+1, m], imgNodeId[ACC][n, m])
 
-
-        # print(imgNodeId[ACC])
-        if ACC == 1:
+        print(imgNodeId[ACC])
+        print(Merges)
+        if ACC == 20:
             rootNotReached = False
             b = time.time()
             print("Alpha level:", ACC, "execution time:", b - a, "seconds")
             exit(1)
             # img.show()
-
-def
+        ACC+=1
 
 def reorganize(level):
     id = 1
@@ -129,7 +136,7 @@ def updateNode(level, n, m, directions):
 
     if len(directions) == 0 or (imgNodeId[level][n, m] == -1 and imgNodeId[level][x, y] == -1) and len(newDir) == 0:
         id = createNode()
-        Merges.append([id, img[n][m], img[n][m]])
+        Merges[level].append(id)
         imgNodeId[level][n, m] = id
     elif imgNodeId[level][n, m] == -1 and imgNodeId[level][x, y] != -1 and len(newDir) < 2:
         imgNodeId[level][n, m] = imgNodeId[level][x, y]
