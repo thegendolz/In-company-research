@@ -7,16 +7,16 @@ from scipy.spatial import distance
 
 Parent = []
 Merges = []
-#getImage = Image.open('example_1.png')
-#img = np.asarray(getImage.convert('HSV'))
-#swidth, height = getImage.size
-img = [[0, 1, 1, 1, 6],
-       [12, 1, 1, 26, 6],
-       [0, 1, 9, 1, 6],
-       [0, 1, 12, 1, 6],
-       [0, 1, 1, 1, 6]]
+getImage = Image.open('example_1.png')
+img = np.asarray(getImage.convert('1'))
+width, height = getImage.size
+#img = [[0, 1, 1, 1, 6],
+#       [12, 1, 1, 26, 6],
+#       [0, 1, 9, 1, 6],
+#       [0, 1, 12, 1, 6],
+#       [0, 1, 1, 1, 6]]
 
-width, height = 5, 5
+# width, height = 5, 5
 imgNodeId = []
 
 id = 0
@@ -53,7 +53,7 @@ def initializationAlphatree(width, height):
             lookForNeighbours(n, m, 0, 4, width, height)
     #reorganize(ACC)
 
-    print(imgNodeId[0])
+    #print(imgNodeId[0])
     b = time.time()
     print("Execution time for loop:", b - a, "seconds")
 
@@ -61,11 +61,12 @@ def initializationAlphatree(width, height):
 def addAlphaLayers():
     ACC = 1
     rootNotReached = True
-    a = time.time()
     while rootNotReached:
         addEmptyLevel(ACC)
         #for merge in uniques:
 
+
+        a = time.time()
         # As long as root is not reached, keep going with a lower alpha-cc
         for m in range(0, width):
             for n in range(0, height):
@@ -78,15 +79,17 @@ def addAlphaLayers():
                         Merges[ACC].append([imgNodeId[ACC][n+1, m],  imgNodeId[ACC][n, m]])
                         mergeNode(ACC, imgNodeId[ACC][n+1, m], imgNodeId[ACC][n, m])
 
-        print(imgNodeId[ACC])
-        print(Merges)
-        if ACC == 20:
+        b = time.time()
+        print("Alpha level:", ACC, "execution time:", b - a, "seconds")
+        #print(imgNodeId[ACC])
+        #print(Merges)
+        if ACC == 10:
             rootNotReached = False
-            b = time.time()
-            print("Alpha level:", ACC, "execution time:", b - a, "seconds")
-            exit(1)
+            #exit(1)
             # img.show()
         ACC+=1
+    pillow_image = Image.fromarray(imgNodeId[10].astype('uint8'))
+    pillow_image.show()
 
 def reorganize(level):
     id = 1
