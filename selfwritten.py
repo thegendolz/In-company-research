@@ -50,20 +50,38 @@ def initializeAlphaTree():
     global id
     addEmptyLevel(0)
     for n in range(0, height):
-        for m in range(0, width-1):
-            dissHorizontal = calculateDissimilarity(img[n][m], img[n][m+1])
-            dissimilarityMatrixHorizontal.append([n, m, dissHorizontal])
-            if n < height-1:
-                dissVertical = calculateDissimilarity(img[n][m], img[n + 1][m])
-                dissimilarityMatrixVertical.append([n, m, dissVertical])
+        for m in range(0, width):
+            ##Gets all the dissimilarities for all pixels within the image. Ff there is no pixel on the right set to -1
+            ##But do add it to the dissimilarity so the edges can be set aswell
 
+            #No pixel under the current pixel or right
+            if n == height-1 and m == width-1:
+                dissimilarityMatrixVertical.append([n, m, -1])
+                dissimilarityMatrixHorizontal.append([n, m, -1])
+            #No pixel on the right
+            elif m == width-1:
+                dissimilarityMatrixHorizontal.append([n, m, -1])
+                dissimilarityMatrixVertical.append([n, m, calculateDissimilarity(img[n][m], img[n+1][m])])
+            #No pixel below
+            elif n == height-1:
+                dissimilarityMatrixVertical.append([n, m, -1])
+                dissimilarityMatrixHorizontal.append([n, m, calculateDissimilarity(img[n][m], img[n][m+1])])
+            #Pixels below and right of the current pixel
+            else:
+                dissimilarityMatrixHorizontal.append([n, m, calculateDissimilarity(img[n][m], img[n][m+1])])
+                dissimilarityMatrixVertical.append([n, m, calculateDissimilarity(img[n][m], img[n + 1][m])])
     #print(dissimilarityMatrixHorizontal)
+    #exit(1)
 
     for diss in dissimilarityMatrixHorizontal:
         n = diss[0]
         m = diss[1]
         dissimilarity = diss[2]
+        #If the dissimilarity is 0
         if dissimilarity == 0:
+            # print(n, m)
+            # print(imgNodeId[0][n, m])
+            # print(imgNodeId[0][n, m+1])
             if imgNodeId[0][n, m] == -1 and imgNodeId[0][n, m+1] != -1:
                 #Check if has same otherwise add together
                 imgNodeId[0][n, m] = imgNodeId[0][n, m+1]
@@ -72,6 +90,7 @@ def initializeAlphaTree():
                 imgNodeId[0][n, m+1] = imgNodeId[0][n, m]
                 setTuples(n, m+1, n, m, tuplesData[n][m][2], tuplesData[n][m][3])
             elif imgNodeId[0][n, m] != -1 and imgNodeId[0][n, m+1] != -1:
+                print("union")
                 union(n, m, n, m+1)
             else:
                 imgNodeId[0][n, m] = id
@@ -80,16 +99,17 @@ def initializeAlphaTree():
                 setTuples(n, m+1, n, m, n, m)
                 id += 1
         else:
-            imgNodeId[0][n, m] = id
-            setTuples(n, m, -1, -1, n, m)
-            id += 1
+            if imgNodeId[0][n, m] == -1:
+                imgNodeId[0][n, m] = id
+                setTuples(n, m, -1, -1, n, m)
+                id += 1
 
-            imgNodeId[0][n, m+1] = id
-            setTuples(n, m+1, -1, -1, n, m+1)
-            id += 1
-
+            #imgNodeId[0][n, m+1] = id
+            #setTuples(n, m+1, -1, -1, n, m+1)
+            #id += 1
     print(imgNodeId[0])
-
+    print(tuplesData)
+    #exit(1)
     for diss in dissimilarityMatrixVertical:
         n = diss[0]
         m = diss[1]
@@ -97,17 +117,16 @@ def initializeAlphaTree():
         if dissimilarity == 0:
             if imgNodeId[0][n, m] != -1 and imgNodeId[0][n+1, m] != -1:
                 union(n, m, n+1, m)
-        elif imgNodeId[0][n+1, m] == -1:
-            imgNodeId[0][n+1, m] = id
-            setTuples(n+1, m, -1, -1, n+1, m)
-            id += 1
     print(imgNodeId[0])
+    print(tuplesData)
 
     #dissimilarityMatrixHorizontal.sort(key=lambda x: x[2])
     #print(dissimilarityMatrixHorizontal)
     #dissimilarityMatrixVertical.sort(key=lambda x: x[2])
 
 def calculateDissimilarity(obj1, obj2):
+    #obj1 = obj1.astype(np.float32)
+    #obj2 = obj2.astype(np.float32)
     return abs(obj1 - obj2)
 
 def setTuples(n, m, d, f, x, y):
