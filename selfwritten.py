@@ -7,43 +7,134 @@ from scipy.spatial import distance
 
 Parent = []
 Merges = []
-getImage = Image.open('example_1.png')
-img = np.asarray(getImage.convert('1'))
-width, height = getImage.size
-#img = [[0, 1, 1, 1, 6],
-#       [12, 1, 1, 26, 6],
-#       [0, 1, 9, 1, 6],
-#       [0, 1, 12, 1, 6],
-#       [0, 1, 1, 1, 6]]
+# getImage = Image.open('example_1.png')
+# img = np.asarray(getImage.convert('1'))
+# width, height = getImage.size
+img = [[0, 1, 1, 1, 6],
+      [12, 1, 1, 26, 6],
+      [0, 1, 9, 1, 6],
+      [0, 1, 12, 1, 6],
+      [0, 1, 1, 1, 6]]
 
-# width, height = 5, 5
+width, height = 5, 5
 imgNodeId = []
+tuplesData = [[[-1 for z in range(4)] for j in range(width)] for i in range(height)]
+
+
+dissimilarityMatrixHorizontal = []
+dissimilarityMatrixVertical = []
 
 id = 0
 
 def initialize():
     start = time.time()
-    addEmptyLevel(id)
 
+
+    #print(tuplesData)
+    initializeAlphaTree()
+
+    #addEmptyLevel(id)
     ## Initialization of the alpha tree itself
-    initializationAlphatree(width, height)
+    #initializationAlphatree(width, height)
     #print(Merges)
-    addAlphaLayers()
+    #addAlphaLayers()
     #getImage.show()
 
     end = time.time()
 
     print("Execution time:", end - start, "seconds")
 
+
+
+def initializeAlphaTree():
+    global id
+    addEmptyLevel(0)
+    for n in range(0, height):
+        for m in range(0, width-1):
+            dissHorizontal = calculateDissimilarity(img[n][m], img[n][m+1])
+            dissimilarityMatrixHorizontal.append([n, m, dissHorizontal])
+            if n < height-1:
+                dissVertical = calculateDissimilarity(img[n][m], img[n + 1][m])
+                dissimilarityMatrixVertical.append([n, m, dissVertical])
+
+    #print(dissimilarityMatrixHorizontal)
+
+    for diss in dissimilarityMatrixHorizontal:
+        n = diss[0]
+        m = diss[1]
+        dissimilarity = diss[2]
+        if dissimilarity == 0:
+            if imgNodeId[0][n, m] == -1 and imgNodeId[0][n, m+1] != -1:
+                #Check if has same otherwise add together
+                imgNodeId[0][n, m] = imgNodeId[0][n, m+1]
+                setTuples(n, m, n, m+1, tuplesData[n][m+1][2], tuplesData[n][m+1][3])
+            elif imgNodeId[0][n, m] != -1 and imgNodeId[0][n, m+1] == -1:
+                imgNodeId[0][n, m+1] = imgNodeId[0][n, m]
+                setTuples(n, m+1, n, m, tuplesData[n][m][2], tuplesData[n][m][3])
+            elif imgNodeId[0][n, m] != -1 and imgNodeId[0][n, m+1] != -1:
+                union(n, m, n, m+1)
+            else:
+                imgNodeId[0][n, m] = id
+                setTuples(n, m, -1, -1, n, m)
+                imgNodeId[0][n, m+1] = id
+                setTuples(n, m+1, n, m, n, m)
+                id += 1
+        else:
+            imgNodeId[0][n, m] = id
+            setTuples(n, m, -1, -1, n, m)
+            id += 1
+
+            imgNodeId[0][n, m+1] = id
+            setTuples(n, m+1, -1, -1, n, m+1)
+            id += 1
+
+    print(imgNodeId[0])
+
+    for diss in dissimilarityMatrixVertical:
+        n = diss[0]
+        m = diss[1]
+        dissimilarity = diss[2]
+        if dissimilarity == 0:
+            if imgNodeId[0][n, m] != -1 and imgNodeId[0][n+1, m] != -1:
+                union(n, m, n+1, m)
+        elif imgNodeId[0][n+1, m] == -1:
+            imgNodeId[0][n+1, m] = id
+            setTuples(n+1, m, -1, -1, n+1, m)
+            id += 1
+    print(imgNodeId[0])
+
+    #dissimilarityMatrixHorizontal.sort(key=lambda x: x[2])
+    #print(dissimilarityMatrixHorizontal)
+    #dissimilarityMatrixVertical.sort(key=lambda x: x[2])
+
+def calculateDissimilarity(obj1, obj2):
+    return abs(obj1 - obj2)
+
+def setTuples(n, m, d, f, x, y):
+    tuplesData[n][m] = [d, f, x, y]
+
+def union(n,m,x,y):
+    tuple1 = tuplesData[n][m]
+    #tuple2 = tuplesData[x][y]
+
+    while tuplesData[x][y][0] != -1 and tuplesData[x][y][1] != -1:
+        tuple2 = tuplesData[x][y]
+        imgNodeId[0][x, y] = imgNodeId[0][n, m]
+        setTuples(x, y, n, m, tuple1[2], tuple1[3])
+        x = tuple2[0]
+        y = tuple2[1]
+
+    setTuples(x, y, n, m, tuple1[2], tuple1[3])
+
 def addEmptyLevel(level):
-    Merges.append([])
     if level == 0:
         imgNodeId.append(np.zeros((height, width)))
         for m in range(0, width):
             for n in range(0, height):
                 imgNodeId[level][n, m] = -1
-    else:
-        imgNodeId.append(imgNodeId[level-1])
+
+    #print(tuplesData)
+#----------------------------------[Rewritten]------------------------------------------------
 
 def initializationAlphatree(width, height):
 
@@ -53,7 +144,7 @@ def initializationAlphatree(width, height):
             lookForNeighbours(n, m, 0, 4, width, height)
     #reorganize(ACC)
 
-    #print(imgNodeId[0])
+    print(imgNodeId[0])
     b = time.time()
     print("Execution time for loop:", b - a, "seconds")
 
@@ -81,8 +172,8 @@ def addAlphaLayers():
 
         b = time.time()
         print("Alpha level:", ACC, "execution time:", b - a, "seconds")
-        #print(imgNodeId[ACC])
-        #print(Merges)
+        print(imgNodeId[ACC])
+        print(Merges)
         if ACC == 10:
             rootNotReached = False
             #exit(1)
@@ -113,6 +204,8 @@ def lookForNeighbours(n, m, alpha, CNNType, width, height):
 
 def getDistance(obj1, obj2):
     #distance = abs(obj1[0] - (int(obj1[0]) + int(obj2[0])) / 2)
+    #obj1 = obj1.astype(np.float32)
+    #obj2 = obj2.astype(np.float32)
     distance = abs(obj1 - obj2)
     return distance
 
