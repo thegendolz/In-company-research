@@ -133,15 +133,36 @@ def setTuples(n, m, d, f, x, y):
     tuplesData[n][m] = [d, f, x, y]
 
 def union(n,m,x,y):
-    tuple1 = tuplesData[n][m]
-    #tuple2 = tuplesData[x][y]
 
-    while tuplesData[x][y][0] != -1 and tuplesData[x][y][1] != -1:
-        tuple2 = tuplesData[x][y]
-        imgNodeId[0][x, y] = imgNodeId[0][n, m]
-        setTuples(x, y, n, m, tuple1[2], tuple1[3])
-        x = tuple2[0]
-        y = tuple2[1]
+    tuple1 = tuplesData[n][m]
+    tuple2 = tuplesData[x][y]
+
+    if tuple1[2] != tuple1[2] and tuple2[3] != tuple2[3]:
+
+        while searchpath
+
+
+    if tuple1[0] == -1 and tuple1[1] == -1 and tuple2[0] == -1 and tuple2[1] == -1:
+        path = tuple2
+        imgNodeId[0][n, m] = imgNodeId[0][x, m]
+        setTuples(n, m, x, y, x, y)
+
+        # while naar rechts voeg toe aan aand x,y
+        #tuplesData[n][m] = [n, m, tuple1[2], tuple1[3]]
+    elif tuple1[0] == -1 and tuple1[1] == -1 and tuple2[0] != -1 and tuple2[1] != -1:
+        #volg pad links rechts en zet die naar origin
+
+
+    if tuple1[0] != -1 and tuple1[1] != -1 and tuple2[0]:
+        #volg pad links rechts en zet die naar origin
+
+    elif
+    # while tuplesData[x][y][0] != -1 and tuplesData[x][y][1] != -1:
+    #     tuple2 = tuplesData[x][y]
+    #     imgNodeId[0][x, y] = imgNodeId[0][n, m]
+    #     setTuples(x, y, n, m, tuple1[2], tuple1[3])
+    #     x = tuple2[0]
+    #     y = tuple2[1]
 
     setTuples(x, y, n, m, tuple1[2], tuple1[3])
 
@@ -153,6 +174,7 @@ def addEmptyLevel(level):
                 imgNodeId[level][n, m] = -1
 
     #print(tuplesData)
+
 #----------------------------------[Rewritten]------------------------------------------------
 
 def initializationAlphatree(width, height):

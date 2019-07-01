@@ -1,0 +1,30 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (ConsoleApplication4.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  alphatree.cpp
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.cpp(1): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.h(13): error C2061: syntax error: identifier 'FileReader'
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.cpp(9): error C2511: 'void AlphaTree::initialize(FileReader)': overloaded member function not found in 'AlphaTree'
+  c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.h(7): note: see declaration of 'AlphaTree'
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.cpp(12): error C2065: 'Dissimilarity': undeclared identifier
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.cpp(12): error C2923: 'std::vector': 'Dissimilarity' is not a valid template type argument for parameter '_Ty'
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.cpp(12): error C2903: 'allocator': symbol is neither a class template nor a function template
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.cpp(12): error C3203: 'allocator': unspecialized class template can't be used as a template argument for template parameter '_Alloc', expected a real type
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.cpp(14): error C2923: 'std::vector': 'Dissimilarity' is not a valid template type argument for parameter '_Ty'
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.cpp(14): error C2903: 'allocator': symbol is neither a class template nor a function template
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.cpp(14): error C3203: 'allocator': unspecialized class template can't be used as a template argument for template parameter '_Alloc', expected a real type
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.cpp(14): error C2133: 'AlphaLevel': unknown size
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.cpp(14): error C2512: 'std::vector': no appropriate default constructor available
+  c:\program files (x86)\microsoft visual studio\2017\community\vc\tools\msvc\14.16.27023\include\vector(625): note: see declaration of 'std::vector'
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.cpp(14): error C2146: syntax error: missing ';' before identifier 'al'
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.cpp(14): error C2065: 'al': undeclared identifier
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.cpp(14): error C2597: illegal reference to non-static member 'AlphaTree::alphaLevel'
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.cpp(24): error C2597: illegal reference to non-static member 'AlphaTree::alphaLevel'
+  dissimilarity.cpp
+  filereader.cpp
+  main.cpp
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.h(13): error C2061: syntax error: identifier 'FileReader'
+c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\main.cpp(14): error C2660: 'AlphaTree::initialize': function does not take 1 arguments
+  c:\users\siebert\source\repos\consoleapplication4\consoleapplication4\alphatree.h(13): note: see declaration of 'AlphaTree::initialize'
+  node.cpp
+  alphalevel.cpp
+  pixel.cpp
+  Generating Code...
