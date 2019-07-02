@@ -4,6 +4,8 @@
 #include "pixel.h"
 #include "alphalevel.h"
 #include "filereader.h"
+#include <vector>
+#include "dissimilarity.h"
 
 class AlphaTree {
 	public:
@@ -16,10 +18,13 @@ class AlphaTree {
 		void setAlphaStep();
 		void setPixel(Pixel pixel, int height, int width);
 		Pixel getPixel(int height, int width);
+		void findAllDissimilarities(int height, int width, std::vector<std::vector<int>> image);
 
 private:
 		//Variables
 		int alphaLevel;
+		int id;
+		std::vector<int> test;
 		std::vector<Dissimilarity> horizontalDissimilarity;
 		std::vector<Dissimilarity> verticalDissimilarity;
 		std::vector<std::vector<Pixel>> pixelObjArray;

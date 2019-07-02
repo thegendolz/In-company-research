@@ -13,6 +13,7 @@ class AlphaLevel {
 		//Functions
 		void setPixel(int amount, int height, int width);
 		int getPixel(int height, int width);
+		void setEmptyLayer(int height, int width);
 
 	private:
 		//Variables

@@ -1,13 +1,13 @@
 #include "dissimilarity.h"
 
 
-Dissimilarity::Dissimilarity() {
+/*Dissimilarity::Dissimilarity() {
 
 }
 
 Dissimilarity::Dissimilarity(Pixel pixel, int amount) {
 	this->pixel = pixel;
-	this->amount = amount;
+	this->distance = amount;
 }
 
 Pixel Dissimilarity::getPixel() {
@@ -16,4 +16,4 @@ Pixel Dissimilarity::getPixel() {
 
 int Dissimilarity::getDistance() {
 	return this->distance;
-}
+}*/

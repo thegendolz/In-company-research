@@ -47,9 +47,6 @@
     <ClCompile Include="node.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pixel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="filereader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
