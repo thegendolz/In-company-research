@@ -3,11 +3,13 @@
 
 FileReader::FileReader() {
 
-	pixelObjArray = { {0, 1, 1, 1, 6},
+	pixelObjArray = {{0, 1, 1, 1, 6},
 		{12, 1, 1, 26, 6},
 		{0, 1, 9, 1, 6},
 		{0, 1, 12, 1, 6},
-		{0, 1, 1, 1, 6} };
+		{0, 1, 1, 1, 6}};
+	this->imageHeight = 5;
+	this->imageWidth = 5;
 }
 
 std::vector<std::vector<int>> FileReader::getPixelArray() {
@@ -17,7 +19,7 @@ std::vector<std::vector<int>> FileReader::getPixelArray() {
 void FileReader::createPixelArray() {
 	for (int n = 0; n < getImageHeight(); n++) {
 		for (int m = 0; m < getImageWidth(); m++) {
-			struct Pixel p = { p.x = m, p.y = n, p.value = -1 };
+			Pixel p = Pixel(m,n,-1);
 		}
 	}
 }

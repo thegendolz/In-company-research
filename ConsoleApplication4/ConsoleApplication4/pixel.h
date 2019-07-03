@@ -3,34 +3,31 @@
 
 #include "node.h"
 
-struct Pixel{
-	int x;
-	int y;
-	int value;
-	int node_id;
+
+
+class Pixel {
+	public:
+		//Constructors
+		Pixel(int y, int x, int value);
+		Pixel();
+
+		//Functions
+		Pixel * getParent();
+		void setParent(Pixel *pixel, int id);
+		int getY();
+		int getX();
+		int getValue();
+		int getColor();
+		int getId();
+
+
+		//Variables
+	private:
+		Pixel *parent;
+		int x;
+		int y;
+		int value;
+		int id;
 };
-
-
-/*class Pixel {
-public:
-	//Constructors
-	Pixel(int y, int x, int value);
-	Pixel();
-
-	//Functions
-	Node getParent();
-	void setParent(Node node);
-	int getY();
-	int getX();
-	int getValue();
-	int getColor();
-
-	//Variables
-private:
-	int x;
-	int y;
-	int value;
-	Node parent;
-};*/
 
 #endif 

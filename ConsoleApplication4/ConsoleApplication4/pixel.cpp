@@ -1,22 +1,29 @@
-/*#include "pixel.h"
+#include "pixel.h"
 
 Pixel::Pixel() {
 
 }
 
 Pixel::Pixel(int y, int x, int value) {
-	this->x = x;
 	this->y = y;
+	this->x = x;
 	this->value = value;
+	this->id = -1;
+	//this->parent = Pixel();
 }
 
-Node Pixel::getParent() {
+Pixel * Pixel::getParent() {
 	return this->parent;
 }
 
-void Pixel::setParent(Node node)
+int Pixel::getId() {
+	return this->id;
+}
+
+void Pixel::setParent(Pixel *pixel, int id)
 {
-	this->parent = node;
+	this->parent = pixel;
+	this->id = id;
 }
 
 int Pixel::getY() {
@@ -32,5 +39,5 @@ int Pixel::getValue() {
 }
 
 int Pixel::getColor() {
-	//
-}*/
+	return 0;
+}
