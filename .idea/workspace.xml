@@ -2,8 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8ddea4c9-ee56-48b1-a453-6d809463114b" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/.vs/Alphatree/v15/.suo" afterPath="$PROJECT_DIR$/ConsoleApplication4/.vs/Alphatree/v15/.suo" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/.vs/Alphatree/v15/Browse.VC.db" afterPath="$PROJECT_DIR$/ConsoleApplication4/.vs/Alphatree/v15/Browse.VC.db" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/alphalevel.obj" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/alphalevel.obj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/alphatree.obj" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/alphatree.obj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/dissimilarity.obj" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/dissimilarity.obj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/filereader.obj" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/filereader.obj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/main.obj" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/main.obj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/node.obj" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/node.obj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/pixel.obj" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/pixel.obj" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/vc141.idb" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/vc141.idb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/vc141.pdb" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/vc141.pdb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/Debug/Alphatree.exe" afterPath="$PROJECT_DIR$/ConsoleApplication4/Debug/Alphatree.exe" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/Debug/Alphatree.ilk" afterPath="$PROJECT_DIR$/ConsoleApplication4/Debug/Alphatree.ilk" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/Debug/Alphatree.pdb" afterPath="$PROJECT_DIR$/ConsoleApplication4/Debug/Alphatree.pdb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/selfwritten.py" afterPath="$PROJECT_DIR$/selfwritten.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/Alphatree.lastbuildstate" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/Alphatree.lastbuildstate" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/CL.command.1.tlog" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/CL.command.1.tlog" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/CL.read.1.tlog" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/CL.read.1.tlog" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/CL.write.1.tlog" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/CL.write.1.tlog" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/link.command.1.tlog" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/link.command.1.tlog" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/link.read.1.tlog" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/link.read.1.tlog" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/link.write.1.tlog" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/link.write.1.tlog" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/ConsoleApplication4.log" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/ConsoleApplication4.log" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,7 +42,7 @@
       <file leaf-file-name="selfwritten.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/selfwritten.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
+            <state relative-caret-position="17">
               <caret line="90" column="81" lean-forward="false" selection-start-line="90" selection-start-column="81" selection-end-line="90" selection-end-column="81" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
@@ -70,7 +91,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-1911" />
     <option name="y" value="348" />
     <option name="width" value="1449" />
@@ -91,6 +112,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -102,8 +125,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -191,10 +212,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="348" width="1936" height="1056" extended-state="6" />
+    <frame x="-1928" y="348" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15031983" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15191898" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -226,6 +247,21 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/selfwritten.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#17#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example_1.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/selfwritten.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -504,7 +540,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/selfwritten.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
+        <state relative-caret-position="17">
           <caret line="90" column="81" lean-forward="false" selection-start-line="90" selection-start-column="81" selection-end-line="90" selection-end-column="81" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />

@@ -16,6 +16,7 @@ class AlphaTree {
 		void initialize(FileReader fileReader);
 		int calculateDissimilarity(int position_1, int position_2);
 		void setAlphaStep();
+		Pixel* findRoot(Pixel *pixel);
 		void setPixel(Pixel pixel, int height, int width);
 
 		//In order to speed up the process only the id's are saved for each alpha level

@@ -4,11 +4,11 @@ Pixel::Pixel() {
 
 }
 
-Pixel::Pixel(int y, int x, int value) {
+Pixel::Pixel(int y, int x, int value, int id) {
 	this->y = y;
 	this->x = x;
 	this->value = value;
-	this->id = -1;
+	this->id = id;
 	//this->parent = Pixel();
 }
 
@@ -20,10 +20,9 @@ int Pixel::getId() {
 	return this->id;
 }
 
-void Pixel::setParent(Pixel *pixel, int id)
+void Pixel::setParent(Pixel *pixel)
 {
 	this->parent = pixel;
-	this->id = id;
 }
 
 int Pixel::getY() {
