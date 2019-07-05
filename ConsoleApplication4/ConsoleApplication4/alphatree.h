@@ -17,20 +17,26 @@ class AlphaTree {
 		int calculateDissimilarity(int position_1, int position_2);
 		void setAlphaStep();
 		Pixel* findRoot(Pixel *pixel);
-		void setPixel(Pixel pixel, int height, int width);
+		void setPixel(Pixel pixel, int height, int image_width);
+		void doAlphaStep(int image_height, int image_width);
+		void finishTree(int image_height, int image_width);
+		int getDepth();
+		bool isBottomReached(int image_height, int image_width);
 
 		//In order to speed up the process only the id's are saved for each alpha level
 		//While the alphatree object keeps track of the Pixel objects, but these pixel objects are only created once for the initial process
 		//This function gets the current Pixel Object
 		Pixel getPixel(int height, int width);
 		//This function gets the id of a pixel at a certain alphalevel
-		int getPixelValueAtAlphaLevel(int level, int height, int width);
-		void findAllDissimilarities(int height, int width, std::vector<std::vector<int>> image);
+		int getPixelValueAtAlphaLevel(int level, int image_height, int image_width);
+		void findAllDissimilarities(int image_height, int image_width, std::vector<std::vector<int>> image);
 
 	private:
 		//Variables
 		int alphaLevel;
 		int id;
+		int depth;
+		Pixel isRoot;
 		std::vector<int> test;
 		std::vector<Dissimilarity> horizontalDissimilarity;
 		std::vector<Dissimilarity> verticalDissimilarity;

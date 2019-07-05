@@ -1,31 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8ddea4c9-ee56-48b1-a453-6d809463114b" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/.vs/Alphatree/v15/.suo" afterPath="$PROJECT_DIR$/ConsoleApplication4/.vs/Alphatree/v15/.suo" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/.vs/Alphatree/v15/Browse.VC.db" afterPath="$PROJECT_DIR$/ConsoleApplication4/.vs/Alphatree/v15/Browse.VC.db" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/alphalevel.obj" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/alphalevel.obj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/alphatree.obj" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/alphatree.obj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/dissimilarity.obj" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/dissimilarity.obj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/filereader.obj" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/filereader.obj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/main.obj" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/main.obj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/node.obj" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/node.obj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/pixel.obj" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/pixel.obj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/vc141.idb" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/vc141.idb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/vc141.pdb" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/vc141.pdb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/Debug/Alphatree.exe" afterPath="$PROJECT_DIR$/ConsoleApplication4/Debug/Alphatree.exe" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/Debug/Alphatree.ilk" afterPath="$PROJECT_DIR$/ConsoleApplication4/Debug/Alphatree.ilk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/Debug/Alphatree.pdb" afterPath="$PROJECT_DIR$/ConsoleApplication4/Debug/Alphatree.pdb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/Alphatree.lastbuildstate" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/Alphatree.lastbuildstate" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/CL.command.1.tlog" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/CL.command.1.tlog" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/CL.read.1.tlog" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/CL.read.1.tlog" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/CL.write.1.tlog" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/CL.write.1.tlog" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/link.command.1.tlog" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/link.command.1.tlog" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/link.read.1.tlog" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/link.read.1.tlog" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/link.write.1.tlog" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/Alphatree.tlog/link.write.1.tlog" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/ConsoleApplication4.log" afterPath="$PROJECT_DIR$/ConsoleApplication4/ConsoleApplication4/Debug/ConsoleApplication4.log" />
-    </list>
+    <list default="true" id="8ddea4c9-ee56-48b1-a453-6d809463114b" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -91,7 +67,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-1911" />
     <option name="y" value="348" />
     <option name="width" value="1449" />
@@ -212,8 +188,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="348" width="1936" height="1056" extended-state="7" />
-    <editor active="true" />
+    <frame x="-1928" y="348" width="1936" height="1056" extended-state="6" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15191898" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
