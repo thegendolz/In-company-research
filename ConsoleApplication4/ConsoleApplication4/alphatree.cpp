@@ -41,26 +41,13 @@ void AlphaTree::testing() {
 void AlphaTree::finishTree(int image_height, int image_width) {
 	//printf("test");
 	//int i = 0;
-	while (!this->bottomReached) {
+	//while (!this->bottomReached) {
 	//for (int j = 0; j < 100; j++) {
 	//	printf("step %d \n", this->getDepth());
-		doAlphaStep(image_height, image_width, false);
+	//	doAlphaStep(image_height, image_width, false);
 	//	i++;
-	}
 	//}
-}
-
-bool AlphaTree::isBottomReached(int image_height, int image_width) {
-	/*ap = alphatreeLevels.at(alphatreeLevels.size()-1);
-	int value = ap.getPixel(0, 0);
-	for (int n = 0; n < image_height; n++) {
-		for (int m = 0; m < image_width; m++) {
-			if (ap.getPixel(n, m) != value) {
-				return false;
-			}
-		}
-	}*/
-	return true;
+	//}
 }
 
 int AlphaTree::getDepth() {
@@ -70,78 +57,43 @@ int AlphaTree::getDepth() {
 void AlphaTree::doAlphaStep(int image_height, int image_width, bool initialize) {
 	ap = AlphaLevel(alphaLevel, image_height, image_width);
 	ap.setEmptyLayer(image_height, image_width);
-	horizontalDissimilarity.size();
-	diss = horizontalDissimilarity.at(0);
+	dissimilarity;
+	diss = dissimilarity.at(0);
 
-	while (diss.distance <= alphaLevel && diss.distance >= -1) {
-		diss = horizontalDissimilarity.at(0);
-		int n = diss.pixel.y;
-		int m = diss.pixel.x;
+	while (diss.distance <= alphaLevel && diss.distance >= 0) {
+		diss = dissimilarity.at(0);
+		int n = diss.n;
+		int m = diss.m;
+		int n1 = diss.n1;
+		int m1 = diss.m1;
 		int difference = diss.distance;
 
-		if (pixelObjArray[n][m].parent != 0 && (pixelObjArray[n][m + 1].parent == 0 || pixelObjArray[n][m + 1].parent != 0)) {
-			pixelObjArray[n][m + 1].parent = pixelObjArray[n][m].parent;
+		if (pixelObjArray[n][m].parent != nullptr && pixelObjArray[n1][m1].parent != nullptr) {
+			pointer = findRoot(pixelObjArray[n][m].parent);
+			//Pixel* pointer2 = findRoot(pixelObjArray[n1][m1].parent)
+			pointer->parent = findRoot(pixelObjArray[n1][m1].parent);
 		}
-		else {
+		else if(pixelObjArray[n][m].parent != nullptr && pixelObjArray[n1][m1].parent == nullptr){
+			pixelObjArray[n1][m1].parent = pixelObjArray[n][m].parent;
+		}else {
 			pointer = &pixelObjArray[n][m];
 			pixelObjArray[n][m].parent = pointer;
-			pixelObjArray[n][m + 1].parent = pointer;
+			pixelObjArray[n1][m1].parent = pointer;
 		}
 
-		horizontalDissimilarity.erase(horizontalDissimilarity.begin());
+		dissimilarity.erase(dissimilarity.begin());
 	}
 
-	/*for (int i = 0; i < horizontalDissimilarity.size(); i++) {
-		Dissimilarity dissimilarity = horizontalDissimilarity.at(i);
-		int n = dissimilarity.getPixel().getY();
-		int m = dissimilarity.getPixel().getX();
-		int difference = dissimilarity.getDistance();
-		if (difference <= alphaLevel && difference >= 0) {
-			if (pixelObjArray[n][m].getParent() != 0 && (pixelObjArray[n][m + 1].getParent() == 0 || pixelObjArray[n][m + 1].getParent() != 0)) {
-				pixelObjArray[n][m + 1].setParent(pixelObjArray[n][m].getParent());
-
-			}
-			else {
-				Pixel *ptr = &pixelObjArray[n][m];
-				pixelObjArray[n][m].setParent(ptr);
-				pixelObjArray[n][m + 1].setParent(ptr);
-			}
-		}
-		else if (pixelObjArray[n][m].getParent() == 0) {
-			Pixel *ptr = &pixelObjArray[n][m];
-			pixelObjArray[n][m].setParent(ptr);
-			id++;
-		}
-	}*/
-
 	if (initialize) {
-		for (int i = 0; i < horizontalDissimilarity.size(); i++) {
-			Dissimilarity dissim = horizontalDissimilarity.at(i);
-			if (dissim.pixel.parent == 0) {
-				pointer = &pixelObjArray[dissim.pixel.y][dissim.pixel.x];
-				pixelObjArray[dissim.pixel.y][dissim.pixel.x].parent = pointer;
+		for (int i = 0; i < dissimilarity.size(); i++) {
+			Dissimilarity dissim = dissimilarity.at(i);
+			if (pixelObjArray[dissim.n][dissim.m].parent == 0) {
+
+				pointer = &pixelObjArray[dissim.n][dissim.m];
+				pixelObjArray[dissim.n][dissim.m].parent = pointer;
 				id++;
 			}
 		}
-	}
-
-	diss = verticalDissimilarity.at(0);
-	while (diss.distance <= alphaLevel) {
-		diss = verticalDissimilarity.at(0);
-		int n = diss.pixel.y;
-		int m = diss.pixel.x;
-		int difference = diss.distance;
-
-		if (difference <= alphaLevel && difference >= 0) {
-			//printf("%d, %d, %d \n", pixelObjArray[n][m].getParent(), n, m);
-			counter = 0;
-		    pointer = findRoot(pixelObjArray[n + 1][m].parent);
-			//pixl = *pointer;
-			if (pointer != findRoot(pixelObjArray[n][m].parent)) {
-				pointer->parent = pixelObjArray[n][m].parent;
-			}
-		}
-		verticalDissimilarity.erase(verticalDissimilarity.begin());
 	}
 
 	//Loop through object
@@ -153,8 +105,7 @@ void AlphaTree::doAlphaStep(int image_height, int image_width, bool initialize) 
 	}
 
 	alphatreeLevels.push_back(ap);
-	//printf("ja joh");
-	if (verticalDissimilarity.size() == 0 && horizontalDissimilarity.size() == 0) this->bottomReached = true;
+	if (dissimilarity.size() == 0) this->bottomReached = true;
 	else this->bottomReached = false;
 
 	//printf(this->bottomReached ? "true" : "false");
@@ -175,44 +126,24 @@ Pixel* AlphaTree::findRoot(Pixel *pixel) {
 void AlphaTree::findAllDissimilarities(int height, int width, std::vector<std::vector<int>> image) {
 	for (int n = 0; n < height-1; n++) {
 		for (int m = 0; m < width-1; m++) {
-			if(this->pixelObjArray[n][m] == 0)
-			Pixel pixel = Pixel(n, m, image[n][m], id);
-			this->setPixel(pixel, n, m);
-			id += 1;
-
-			Dissimilarity diss = Dissimilarity(pixel, pixel2, this->calculateDissimilarity())
-		    dissimilarity.push_back()
-			/*if (n == height - 1 && m == width - 1) {
-				verticalDissimilarity.push_back(Dissimilarity(pixel, -1));
-				horizontalDissimilarity.push_back(Dissimilarity(pixel, -1));
-
-			}
-			else if (m == width - 1) {
-				horizontalDissimilarity.push_back(Dissimilarity(pixel, -1));
-				verticalDissimilarity.push_back(Dissimilarity(pixel, this->calculateDissimilarity(image[n][m], image[n + 1][m])));
-
-			}
-			else if (n == height - 1) {
-				verticalDissimilarity.push_back(Dissimilarity(pixel, -1));
-				horizontalDissimilarity.push_back(Dissimilarity(pixel, this->calculateDissimilarity(image[n][m], image[n][m + 1])));
-			}
-			else {
-				horizontalDissimilarity.push_back(Dissimilarity(pixel, this->calculateDissimilarity(image[n][m], image[n][m + 1])));
-				verticalDissimilarity.push_back(Dissimilarity(pixel, this->calculateDissimilarity(image[n][m], image[n + 1][m])));
-			}*/
+			this->setPixel(n, m, image[n][m]);
+			dissimilarity.push_back(Dissimilarity(n, m, n, m + 1, this->calculateDissimilarity(image[n][m], image[n][m + 1])));
+			dissimilarity.push_back(Dissimilarity(n, m, n + 1, m, this->calculateDissimilarity(image[n][m], image[n + 1][m])));
 		}
 	}
-	//horizontalDissimilarity
 
-		std::sort(horizontalDissimilarity.begin(), horizontalDissimilarity.end(), [](const Dissimilarity& lhs, const Dissimilarity& rhs)
-		{
-			return lhs.distance < rhs.distance;
-		});
-
-		std::sort(verticalDissimilarity.begin(), verticalDissimilarity.end(), [](const Dissimilarity& lhs, const Dissimilarity& rhs)
-		{
-			return lhs.distance < rhs.distance;
-		});
+	for (int m=0; m < width-1; m++) {
+		this->setPixel(height-1, m, image[height-1][m]);
+		dissimilarity.push_back(Dissimilarity(height-1, m, height-1, m + 1, this->calculateDissimilarity(image[height-1][m], image[height-1][m + 1])));
+	}
+	for (int n=0; n < height-1; n++) {
+		this->setPixel(n, width-1, image[n][width-1]);
+		dissimilarity.push_back(Dissimilarity(n, width-1, n + 1, width-1, this->calculateDissimilarity(image[n][width-1], image[n+1][width-1])));
+	}
+	std::sort(dissimilarity.begin(), dissimilarity.end(), [](const Dissimilarity& lhs, const Dissimilarity& rhs)
+	{
+		return lhs.distance < rhs.distance;
+	});
 }
 
 void AlphaTree::setAlphaStep() {
@@ -223,8 +154,9 @@ int AlphaTree::calculateDissimilarity(int position_1, int position_2) {
 	return abs(position_1 - position_2);
 }
 
-void AlphaTree::setPixel(Pixel pixel, int height, int width) {
-	this->pixelObjArray[height][width] = pixel;
+void AlphaTree::setPixel(int n, int m, int value) {
+	this->pixelObjArray[n][m] = Pixel(n, m, value, id);
+	id += 1;
 }
 
 Pixel AlphaTree::getPixel(int height, int width) {

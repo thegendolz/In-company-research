@@ -17,11 +17,10 @@ class AlphaTree {
 		int calculateDissimilarity(int position_1, int position_2);
 		void setAlphaStep();
 		Pixel* findRoot(Pixel *pixel);
-		void setPixel(Pixel pixel, int height, int image_width);
+		void setPixel(int n, int m, int value);
 		void doAlphaStep(int image_height, int image_width, bool initialize);
 		void finishTree(int image_height, int image_width);
 		int getDepth();
-		bool isBottomReached(int image_height, int image_width);
 		void testing();
 
 		//In order to speed up the process only the id's are saved for each alpha level

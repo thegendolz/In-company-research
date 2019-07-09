@@ -8,10 +8,9 @@ class Dissimilarity {
 	public:
 		//Constructors
 		Dissimilarity();
-		Dissimilarity(Pixel pixel, Pixel pixel2, int amount);
+		Dissimilarity(int n, int m, int n1, int m1, int amount);
 
-		Pixel pixel;
-		Pixel pixel2;
+		short n, m, n1, m1;
 		short distance;
 		short amount;
 };

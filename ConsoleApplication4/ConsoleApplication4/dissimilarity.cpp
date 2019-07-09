@@ -5,9 +5,11 @@ Dissimilarity::Dissimilarity() {
 
 }
 
-Dissimilarity::Dissimilarity(Pixel pixel, Pixel pixel2, int amount) {
-	this->pixel = pixel;
-	this->pixel2 = pixel2;
+Dissimilarity::Dissimilarity(int n, int m, int n1, int m1, int amount) {
+	this->n = n;
+	this->m = m;
+	this->n1 = n1;
+	this->m1 = m1;
 	this->distance = amount;
 }
 

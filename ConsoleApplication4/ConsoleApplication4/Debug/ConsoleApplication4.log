@@ -1,5 +1,5 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(387,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (ConsoleApplication4.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   alphatree.cpp
-c:\users\siebert\documents\in-company research project\in-company-research\in-company-research\consoleapplication4\consoleapplication4\alphatree.cpp(117): warning C4018: '<': signed/unsigned mismatch
-c:\users\siebert\documents\in-company research project\in-company-research\in-company-research\consoleapplication4\consoleapplication4\alphatree.cpp(172): warning C4715: 'AlphaTree::findRoot': not all control paths return a value
+c:\users\siebert\documents\in-company research project\in-company-research\in-company-research\consoleapplication4\consoleapplication4\alphatree.cpp(88): warning C4018: '<': signed/unsigned mismatch
+c:\users\siebert\documents\in-company research project\in-company-research\in-company-research\consoleapplication4\consoleapplication4\alphatree.cpp(124): warning C4715: 'AlphaTree::findRoot': not all control paths return a value
   ConsoleApplication4.vcxproj -> C:\Users\Siebert\Documents\in-company research project\In-company-research\In-company-research\ConsoleApplication4\Debug\Alphatree.exe
