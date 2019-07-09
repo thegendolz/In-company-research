@@ -70,11 +70,11 @@ void AlphaTree::doAlphaStep(int image_height, int image_width, bool initialize) 
 
 		if (pixelObjArray[n][m].parent != nullptr && pixelObjArray[n1][m1].parent != nullptr) {
 			pointer = findRoot(pixelObjArray[n][m].parent);
-			//Pixel* pointer2 = findRoot(pixelObjArray[n1][m1].parent)
-			pointer->parent = findRoot(pixelObjArray[n1][m1].parent);
+			Pixel* pointer2 = findRoot(pixelObjArray[n1][m1].parent);
+			if(pointer != pointer2) pointer->parent = findRoot(pixelObjArray[n1][m1].parent);
 		}
 		else if(pixelObjArray[n][m].parent != nullptr && pixelObjArray[n1][m1].parent == nullptr){
-			pixelObjArray[n1][m1].parent = pixelObjArray[n][m].parent;
+			pixelObjArray[n1][m1].parent = findRoot(pixelObjArray[n][m].parent);
 		}else {
 			pointer = &pixelObjArray[n][m];
 			pixelObjArray[n][m].parent = pointer;
