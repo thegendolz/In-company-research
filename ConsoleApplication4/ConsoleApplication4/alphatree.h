@@ -18,10 +18,11 @@ class AlphaTree {
 		void setAlphaStep();
 		Pixel* findRoot(Pixel *pixel);
 		void setPixel(Pixel pixel, int height, int image_width);
-		void doAlphaStep(int image_height, int image_width);
+		void doAlphaStep(int image_height, int image_width, bool initialize);
 		void finishTree(int image_height, int image_width);
 		int getDepth();
 		bool isBottomReached(int image_height, int image_width);
+		void testing();
 
 		//In order to speed up the process only the id's are saved for each alpha level
 		//While the alphatree object keeps track of the Pixel objects, but these pixel objects are only created once for the initial process
@@ -36,10 +37,17 @@ class AlphaTree {
 		int alphaLevel;
 		int id;
 		int depth;
+		int counter;
+		bool bottomReached;
+		Dissimilarity diss;
+		AlphaLevel ap;
+		Pixel* pointer;
+		Pixel pixl;
 		Pixel isRoot;
+		//Pixel pixel;
 		std::vector<int> test;
-		std::vector<Dissimilarity> horizontalDissimilarity;
-		std::vector<Dissimilarity> verticalDissimilarity;
+		std::vector<Dissimilarity> dissimilarity;
+		//std::vector<Dissimilarity> verticalDissimilarity;
 		std::vector<std::vector<Pixel>> pixelObjArray;
 		std::vector<AlphaLevel> alphatreeLevels;
 };
