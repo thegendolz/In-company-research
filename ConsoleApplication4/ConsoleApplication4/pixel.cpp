@@ -10,10 +10,10 @@ Pixel::Pixel(int y, int x, int value, int id) {
 	this->x = x;
 	this->value = value;
 	this->id = id;
-	//this->parent = Pixel();
+	this->parent = 0;
 }
 
-Pixel * Pixel::getParent() {
+/*Pixel * Pixel::getParent() {
 	return this->parent;
 }
 
@@ -40,4 +40,4 @@ int Pixel::getValue() {
 
 int Pixel::getColor() {
 	return 0;
-}
+}*/

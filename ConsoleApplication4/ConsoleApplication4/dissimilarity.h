@@ -8,17 +8,11 @@ class Dissimilarity {
 	public:
 		//Constructors
 		Dissimilarity();
-		Dissimilarity(Pixel pixel, int amount);
+		Dissimilarity(int n, int m, int n1, int m1, int amount);
 
-		//Functions
-		Pixel getPixel();
-		int getDistance();
-
-	private:
-		//Variables
-		Pixel pixel;
-		int distance;
-		int amount;
+		short n, m, n1, m1;
+		short distance;
+		short amount;
 };
 
 #endif 
