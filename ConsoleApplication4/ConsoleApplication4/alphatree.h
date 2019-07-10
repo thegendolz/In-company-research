@@ -37,6 +37,8 @@ class AlphaTree {
 		int id;
 		int depth;
 		int counter;
+		int a;
+		int b;
 		bool bottomReached;
 		Dissimilarity diss;
 		AlphaLevel ap;

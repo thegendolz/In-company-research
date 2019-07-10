@@ -13,21 +13,22 @@ int main(int argc, char *argv[])
 	AlphaTree ap = AlphaTree();
 	ap.initialize(fileReader);
 
-	
-	//ap.finishTree(fileReader.getImageHeight(), fileReader.getImageWidth());
+	ap.finishTree(fileReader.getImageHeight(), fileReader.getImageWidth());
 
 	//for (int depth = 0; depth < ap.getDepth(); depth++) {
-		//printf("--------[Tree Depth: %d]--------\n", depth);
-		for (int i = 0; i < 5; i++) {
+	//	printf("--------[Tree Depth: %d]--------\n", depth);
+		/*for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
 				if (j == 4) {
-					printf("%d\n", ap.getPixel(i, j).parent->id);
+					printf("%d\n", ap.findRoot(ap.getPixel(i, j).parent)->id);
+					//printf("%d\n", ap.getPixel(i, j).id);
 				}
 				else {
-					printf("%d - ", ap.getPixel(i, j).parent->id);
+					printf("%d - ", ap.findRoot(ap.getPixel(i, j).parent)->id);
+					//printf("%d - ", ap.getPixel(i, j).id);
 				}
 			}
-		}
+		}*/
 	//}
 
 	printf("Time taken: %.2fs\n", (double)(clock() - tStart) / CLOCKS_PER_SEC);

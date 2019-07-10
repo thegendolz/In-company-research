@@ -11,7 +11,6 @@ class FileReader {
 		FileReader();
 
 		//Functions
-		void createPixelArray();
 		int getImageHeight();
 		int getImageWidth();
 		std::vector<std::vector<int>> getPixelArray();

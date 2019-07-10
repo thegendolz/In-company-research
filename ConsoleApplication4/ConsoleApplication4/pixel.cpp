@@ -10,7 +10,6 @@ Pixel::Pixel(int y, int x, int value, int id) {
 	this->x = x;
 	this->value = value;
 	this->id = id;
-	this->parent = 0;
 }
 
 /*Pixel * Pixel::getParent() {
