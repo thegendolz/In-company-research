@@ -5,15 +5,25 @@
 #include "alphatree.h"
 #include <time.h>
 #include "filereader.h"
+#include "opencv2/core/core.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
+#include <iostream>
+#include <math.h>
+
+using namespace std;
+using namespace cv;
 
 int main(int argc, char *argv[])
 {
 	clock_t tStart = clock();
-	FileReader fileReader = FileReader();
-	AlphaTree ap = AlphaTree();
-	ap.initialize(fileReader);
 
-	ap.finishTree(fileReader.getImageHeight(), fileReader.getImageWidth());
+	//cv::Mat test = imread("test.jpg", 1);
+	FileReader fileReader = FileReader();
+	//AlphaTree ap = AlphaTree();
+	//ap.initialize(fileReader);
+
+	//ap.finishTree(fileReader.getImageHeight(), fileReader.getImageWidth());
 
 	//for (int depth = 0; depth < ap.getDepth(); depth++) {
 	//	printf("--------[Tree Depth: %d]--------\n", depth);
@@ -31,5 +41,5 @@ int main(int argc, char *argv[])
 		}*/
 	//}
 
-	printf("Time taken: %.2fs\n", (double)(clock() - tStart) / CLOCKS_PER_SEC);
+	//printf("Time taken: %.2fs\n", (double)(clock() - tStart) / CLOCKS_PER_SEC);
 }

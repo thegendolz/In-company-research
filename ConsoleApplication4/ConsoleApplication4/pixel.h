@@ -9,18 +9,7 @@ class Pixel {
 	public:
 		//Constructors
 		Pixel(int y, int x, int value, int id);
-
 		Pixel();
-		/*
-		//Functions
-		Pixel * getParent();
-		void setParent(Pixel *pixel);
-		int getY();
-		int getX();
-		int getValue();
-		int getColor();
-		int getId();*/
-
 		Pixel *parent;
 		short value;
 		short id;
