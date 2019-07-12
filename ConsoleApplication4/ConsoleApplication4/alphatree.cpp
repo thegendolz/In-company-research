@@ -16,7 +16,7 @@ void AlphaTree::initialize(FileReader fileReader)
 	int image_height = fileReader.getImageHeight();
 	int image_width = fileReader.getImageWidth();
 
-	std::vector<std::vector<int>> image = fileReader.getPixelArray();
+	std::vector<std::vector<std::vector<double>>> image = fileReader.getPixelArray();
 
 	this->pixelObjArray = std::vector<std::vector<Pixel>>(image_height, std::vector <Pixel>(image_width));
 
@@ -96,7 +96,7 @@ Pixel* AlphaTree::findRoot(Pixel *pixel) {
 	}
 }
 
-void AlphaTree::findAllDissimilarities(int height, int width, std::vector<std::vector<int>> image) {
+void AlphaTree::findAllDissimilarities(int height, int width, std::vector<std::vector<std::vector<double>>> image) {
 	for (int n = 0; n < height-1; n++) {
 		for (int m = 0; m < width-1; m++) {
 			this->setPixel(n, m, image[n][m]);
@@ -126,12 +126,18 @@ void AlphaTree::setAlphaStep() {
 	//AlphaLevel ap = AlphaLevel(alphaLevel, image_height, image_width);
 }
 
-int AlphaTree::calculateDissimilarity(int position_1, int position_2) {
-	return abs(position_1 - position_2);
+int AlphaTree::calculateDissimilarity(std::vector<double> position_1, std::vector<double> position_2) {
+	double l = pow(position_2[0] - position_1[0], 2);
+	double a = pow(position_2[1] - position_1[1], 2);
+	double b = pow(position_2[2] - position_1[2], 2);
+
+	return sqrt(l + a + b);
+
+	//return abs(position_1 - position_2);
 }
 
-void AlphaTree::setPixel(int n, int m, int value) {
-	this->pixelObjArray[n][m] = Pixel(n, m, value, id);
+void AlphaTree::setPixel(int n, int m, std::vector<double> lab) {
+	this->pixelObjArray[n][m] = Pixel(n, m, lab, id);
 	pointer = &pixelObjArray[n][m];
 	pixelObjArray[n][m].parent = pointer;
 	id += 1;

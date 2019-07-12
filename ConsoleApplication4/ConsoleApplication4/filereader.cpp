@@ -11,75 +11,91 @@ using namespace cv;
 
 FileReader::FileReader() {
 
-	/*pixelObjArray = {{0 , 1 , 0 , 0, 1 },
-				     {12, 1 , 0 , 0, 1 },
-				     {0 , 1 , 1 , 1 , 1},
-					 {0 , 1 , 12, 0 , 0},
-					 {0 , 1 , 1 , 1 , 0}};
-
-	this->imageHeight = 5;
-	this->imageWidth = 5;*/
-	/*this->imageHeight = 500;
-	this->imageWidth = 500; 
-	
-	pixelObjArray = std::vector<std::vector<int>>(imageHeight, std::vector <int>(imageWidth));
-
-	for (int i = 0; i < imageHeight; i++) {
-		for (int j = 0; j < imageWidth; j++) {
-			int random = rand() % 255;
-			//printf("%d \n", random);
-			pixelObjArray[i][j] = random;
-		}
-	}*/
-
-	
-	Mat img = imread("test.png", 0);
+	Mat img = imread("test.png", 1);
 
 	if (!img.data) {
 		//printf("%d \n", img[0][0])
 		printf("Image not working");
 		exit(1);
 	}
-
 	printf("Reading Image ... \n");
-	//img.data;
-	//namedWindow("image", WINDOW_NORMAL);
-	//imshow("image", img);
-	//waitKey(0);
-
 	this->imageHeight = img.rows;
 	this->imageWidth = img.cols;
 
 	printf("height: %d \n", this->imageHeight);
 	printf("width: %d \n", this->imageWidth);
 
-	std::vector<uchar> array;
-	if (img.isContinuous()) {
-		array.assign((uchar*)img.datastart, (uchar*)img.dataend);
-	}
-	else {
-		for (int i = 0; i < img.rows; ++i) {
-			array.insert(array.end(), img.ptr<uchar>(i), img.ptr<uchar>(i) + img.cols);
+	std::vector<cv::Vec3b> pixels(img.rows * img.cols);
+	cv::Mat m(img.rows, img.cols, CV_8UC3, &pixels[0]);
+	img.copyTo(m);
+
+
+	pixelObjArray = std::vector<std::vector<std::vector<double>>>(img.rows, std::vector<std::vector<double>>(img.cols, std::vector <double>(3)));
+
+	for (int i = 0; i < img.rows; i++) {
+		for (int j = 0; j < img.cols; j++) {
+			double r = (double)pixels[i + j].val[0];
+			double g = (double)pixels[i + j].val[1];
+			double b = (double)pixels[i + j].val[2];
+			pixelObjArray[i][j] = this->rgbtolab(r, g, b);
+			double lab_1 = pixelObjArray[i][j][0];
+			double lab_2 = pixelObjArray[i][j][1];
+			double lab_3 = pixelObjArray[i][j][2];
+
 		}
 	}
 
-	for (int i = 0; i < this->imageHeight; i++) {
-		for (int j = 0; j < 20; j++) {
-			if (j == 19) {
-				printf("%d\n", array.at(i+j));
-				//printf("%d\n", ap.getPixel(i, j).id);
-			}
-			else {
-				printf("%d - ", array.at(i + j));
-				
-			}
-		}
-	}
-	//printf("%d", array.at(0));
 	
 }
 
-std::vector<std::vector<int>> FileReader::getPixelArray() {
+std::vector<double> FileReader::rgbtolab(double r_, double g_, double b_) {
+	double x, y, z;
+	double r = (r_ / 255.0);
+	double g = (g_ / 255.0);
+	double b = (b_ / 255.0);
+
+
+
+	if (r > 0.04045) r = pow((r + 0.055) / 1.055, 2.4); else r = r / 12.92;
+	if (g > 0.04045) g = pow((g + 0.055) / 1.055, 2.4); else g = g / 12.92;
+	if (b > 0.04045) b = pow((b + 0.055) / 1.055, 2.4); else b = b / 12.92;
+
+	x = (r * 0.4124 + g * 0.3576 + b * 0.1805) / 0.95047;
+	y = (r * 0.2126 + g * 0.7152 + b * 0.0722) / 1.00000;
+	z = (r * 0.0193 + g * 0.1192 + b * 0.9505) / 1.08883;
+
+	if (x > 0.008856) x = pow(x, 1.0 / 3.0); else x = (7.787 * x) + 16 / 116;
+	if (y > 0.008856) y = pow(y, 1.0 / 3.0); else y = (7.787 * y) + 16 / 116;
+	if (z > 0.008856) z = pow(z, 1.0 / 3.0); else z = (7.787 * z) + 16 / 116;
+	double n_ = (116.0 * y) - 16;
+	double p_ = 500.0 * (x - y);
+	double s_ = 200.0 * (y - z);
+	return std::vector<double>{(116.0 * y) - 16.0, (500.0 * (x - y)), (200.0 * (y - z))};
+
+}
+
+std::vector<int> FileReader::labtorgb(double l_, double a_, double b_) {
+	int y = (l_ + 16.0) / 116.0,
+		x =	a_ / 500.0 + y,
+		z = y - b_ / 200.0,
+		r, g, b;
+
+	x = 0.95047 * ((x * x * x > 0.008856) ? x * x * x : (x - 16 / 116) / 7.787);
+	y = 1.00000 * ((y * y * y > 0.008856) ? y * y * y : (y - 16 / 116) / 7.787);
+	z = 1.08883 * ((z * z * z > 0.008856) ? z * z * z : (z - 16 / 116) / 7.787);
+
+	r = x * 3.2406 + y * -1.5372 + z * -0.4986;
+	g = x * -0.9689 + y * 1.8758 + z * 0.0415;
+	b = x * 0.0557 + y * -0.2040 + z * 1.0570;
+
+	r = (r > 0.0031308) ? (1.055 * pow(r, 1 / 2.4) - 0.055) : 12.92 * r;
+	g = (g > 0.0031308) ? (1.055 * pow(g, 1 / 2.4) - 0.055) : 12.92 * g;
+	b = (b > 0.0031308) ? (1.055 * pow(b, 1 / 2.4) - 0.055) : 12.92 * b;
+
+	return std::vector<int>{ max(0, min(1, r)) * 255, max(0, min(1, g)) * 255, max(0, min(1, b)) * 255};
+}
+
+std::vector<std::vector<std::vector<double>>> FileReader::getPixelArray() {
 	return this->pixelObjArray;
 }
 

@@ -2,16 +2,17 @@
 #define PIXEL_H
 
 #include "node.h"
+#include <vector>
 
 
 
 class Pixel {
 	public:
 		//Constructors
-		Pixel(int y, int x, int value, int id);
+		Pixel(int y, int x, std::vector<double> value, int id);
 		Pixel();
 		Pixel *parent;
-		short value;
+		std::vector<double> value;
 		short id;
 		short x;
 		short y;

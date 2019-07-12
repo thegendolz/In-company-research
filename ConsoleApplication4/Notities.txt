@@ -1,0 +1,48 @@
+------------------[FileReader.cpp]------------------
+
+for (int i = 0; i < 5; i++) {
+	for (int j = 0; j < 5; j++) {
+		if (j == 4) {
+			printf("%d, %d, %d \n", pixelObjArray[i][j][0], pixelObjArray[i][j][1], pixelObjArray[i][j][2]);
+			//printf("%d\n", ap.getPixel(i, j).id);
+		}
+		else {
+			printf("%d, %d, %d - ", pixelObjArray[i][j][0], pixelObjArray[i][j][1], pixelObjArray[i][j][2]);
+			
+		}
+	}
+}
+
+----------------------------------------------
+
+	img.data;
+	namedWindow("image", WINDOW_NORMAL);
+	imshow("image", img);
+	waitKey(0);
+	printf("%d", array.at(0));
+	
+----------------------------------------------
+
+	pixelObjArray = {{0 , 1 , 0 , 0, 1 },
+				     {12, 1 , 0 , 0, 1 },
+				     {0 , 1 , 1 , 1 , 1},
+					 {0 , 1 , 12, 0 , 0},
+					 {0 , 1 , 1 , 1 , 0}};
+
+	this->imageHeight = 5;
+	this->imageWidth = 5;*/
+	this->imageHeight = 500;
+	this->imageWidth = 500; 
+	
+	pixelObjArray = std::vector<std::vector<int>>(imageHeight, std::vector <int>(imageWidth));
+
+	for (int i = 0; i < imageHeight; i++) {
+		for (int j = 0; j < imageWidth; j++) {
+			int random = rand() % 255;
+			//printf("%d \n", random);
+			pixelObjArray[i][j] = random;
+		}
+	}
+
+
+------------------[Main.cpp]------------------
