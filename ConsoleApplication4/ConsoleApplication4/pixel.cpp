@@ -5,12 +5,11 @@ Pixel::Pixel() {
 
 }
 
-Pixel::Pixel(int y, int x, int value, int id) {
+Pixel::Pixel(int y, int x, std::vector<double> value, int id) {
 	this->y = y;
 	this->x = x;
 	this->value = value;
 	this->id = id;
-	this->parent = 0;
 }
 
 /*Pixel * Pixel::getParent() {
