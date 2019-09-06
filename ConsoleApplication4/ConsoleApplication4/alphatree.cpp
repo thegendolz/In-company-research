@@ -32,10 +32,10 @@ void AlphaTree::initialize(FileReader fileReader)
 void AlphaTree::finishTree(int image_height, int image_width) {
 	while (!this->bottomReached) {
 		//printf("step %d \n", this->getDepth());
-		/*printf("--------[Tree Depth: %d]--------\n", alphaLevel);
-		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 5; j++) {
-				if (j == 4) {
+		printf("--------[Tree Depth: %d]--------\n", alphaLevel);
+		for (int i = 0; i < 16; i++) {
+			for (int j = 0; j < 16; j++) {
+				if (j == 15) {
 					printf("%d\n", findRoot(getPixel(i, j).parent)->id);
 					//printf("%d\n", ap.getPixel(i, j).id);
 				}
@@ -44,7 +44,7 @@ void AlphaTree::finishTree(int image_height, int image_width) {
 					//printf("%d - ", ap.getPixel(i, j).id);
 				}
 			}
-		}*/
+		}
 		doAlphaStep(image_height, image_width, false);
 	}
 }
@@ -78,7 +78,8 @@ void AlphaTree::doAlphaStep(int image_height, int image_width, bool initialize) 
 		if(dissimilarity.size() > 0) diss = dissimilarity.at(0);
 		else break;
 	}
-	findTrafficSigns(image_height, image_width);
+
+	//findTrafficSigns(image_height, image_width);
 
 	if (dissimilarity.size() == 0) this->bottomReached = true;
 	else this->bottomReached = false;
@@ -86,25 +87,33 @@ void AlphaTree::doAlphaStep(int image_height, int image_width, bool initialize) 
 }
 
 void AlphaTree::findTrafficSigns(int height, int width) {
+	//#########################################
+	//#	This part is for finding the clusters #
+	//#########################################
 	idConnection.clear();
+	printf("TEST 1");
 	std::vector<std::vector<Pixel>> vector;
 	for (int n = 0; n < height; n++) {
 		for (int m = 0; m < width; m++) {
-			//This part finds all the clusters and pushes them to an Array, this will make it easier to find the traffic signs
+			//This part finds all the clusters and pushes them to an Array containing all pixel objects for each cluster (Found by ID), this will make it easier to find the traffic signs
 			int id = this->resetAndFindId(this->pixelObjArray[n][m].id);
+			//printf("idconnection3: %d", idConnection.size());
+			if(id == vector.size()){
+				vector.push_back(std::vector<Pixel>());
+			}
 			vector[id].push_back(this->pixelObjArray[n][m]);
 		}
 	}
-
-	std::vector<std::vector<std::vector<double>>> cluster;
+	printf("TEST CLUSTER: %d", vector.size());
+	//Once the clusters are made, the positions of all the pixels have to be determined within the cluster
+	std::vector<std::vector<int>> cluster;
 	for (int i = 0; i < vector.size(); i++) {
-		if (vector[i].size() > 80) {
+		if (vector[i].size() > 5) {
+			printf("TEST 0.5");
 			int lowX = -1, lowY = -1, highX = -1, highY = -1;
 			for (int j = 0; j < vector[i].size(); j++) {
-				if (vector[i].at(j).x < lowX || lowX == -1) lowX = vector[i].at(j).x;
-				if (vector[i].at(j).x > highX || highX == -1) highX = vector[i].at(j).x;
-				if (vector[i].at(j).y < lowY || lowY == -1) lowY = vector[i].at(j).y;
-				if (vector[i].at(j).y > highY || highY == -1) highY = vector[i].at(j).y;
+				if (vector[i][j].x < lowX || lowX == -1) lowX = vector[i][j].x;
+				if (vector[i][j].y < lowY || lowY == -1) lowY = vector[i][j].y;
 			}
 
 			int diffX = highX - lowX;
@@ -112,15 +121,31 @@ void AlphaTree::findTrafficSigns(int height, int width) {
 
 			//std::vector<std::vector<std::vector<double>>>(img.rows, std::vector<std::vector<double>>(img.cols, std::vector <double>(3)));
 
-			cluster = std::vector<std::vector<std::vector<double>>>(diffY, std::vector<std::vector<double>>(diffY, std::vector<double>(3)));
-
+			cluster = std::vector<std::vector<int>>(diffY, std::vector<int>(diffX));
+			printf("TEST 2");
 			for (int j = 0; j < vector[i].size(); j++) {
-
-				cluster[vector[i].at(j).y - diffY][vector[i].at(j).x - diffX] = vector[i].at(j).value;
+				cluster[vector[i].at(j).y - lowY][vector[i].at(j).x - lowX] = vector[i].at(j).value[0];
 			}
 
 			//Here is the cluster with the correct objects, now check if it is a traffic sign
+			printf("TEST 3");
+			//##############################################
+			//#	This part is for finding the traffic signs #
+			//##############################################
 
+			printf("--------[Clusters]--------\n");
+			for (int i = 0; i < cluster.size(); i++) {
+				for (int j = 0; j < cluster[i].size(); j++) {
+					if (j == cluster[i].size()-1) {
+						printf("%d\n", cluster[i][j]);
+						//printf("%d\n", ap.getPixel(i, j).id);
+					}
+					else {
+						printf("%d - ", cluster[i][j]);
+						//printf("%d - ", ap.getPixel(i, j).id);
+					}
+				}
+			}
 
 		}
 	}
@@ -138,8 +163,11 @@ int AlphaTree::resetAndFindId(int current_id) {
 			return idConnection.at(i)[0];
 		}
 	}
-	idConnection.push_back({ idConnection.size(), current_id });
-	return idConnection[idConnection.size() - 1][0];
+	std::vector<int> arr = std::vector<int>(2);
+	arr.push_back(idConnection.size());
+	arr.push_back(current_id);
+	idConnection.push_back(arr);
+	return idConnection.at(idConnection.size() - 1).at(0);
 }
 
 Pixel* AlphaTree::findRoot(Pixel *pixel) {

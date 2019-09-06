@@ -11,7 +11,7 @@ using namespace cv;
 
 FileReader::FileReader() {
 
-	Mat img = imread("test.png", 1);
+	Mat img = imread("test_small.png", 1);
 
 	if (!img.data) {
 		//printf("%d \n", img[0][0])
@@ -30,22 +30,33 @@ FileReader::FileReader() {
 	img.copyTo(m);
 
 
-	pixelObjArray = std::vector<std::vector<std::vector<double>>>(img.rows, std::vector<std::vector<double>>(img.cols, std::vector <double>(3)));
+	pixelObjArray = std::vector<std::vector<std::vector<double>>>(img.rows, std::vector<std::vector<double>>(img.cols, std::vector<double>(3)));
 
 	for (int i = 0; i < img.rows; i++) {
 		for (int j = 0; j < img.cols; j++) {
-			double r = (double)pixels[i + j].val[0];
-			double g = (double)pixels[i + j].val[1];
-			double b = (double)pixels[i + j].val[2];
-			pixelObjArray[i][j] = this->rgbtolab(r, g, b);
-			double lab_1 = pixelObjArray[i][j][0];
-			double lab_2 = pixelObjArray[i][j][1];
-			double lab_3 = pixelObjArray[i][j][2];
+			double b = (double)img.at<cv::Vec3b>(i, j)[0];
+			double g = (double)img.at<cv::Vec3b>(i, j)[1];
+			double r = (double)img.at<cv::Vec3b>(i, j)[2];
+			std::vector<double> pixel = this->rgbtolab(r, g, b);
+			this->pixelObjArray[i][j][0] = pixel[0];
+			this->pixelObjArray[i][j][1] = pixel[1];
+			this->pixelObjArray[i][j][2] = pixel[2];
 
 		}
 	}
 
-	
+	printf("--------[Image: %d]--------\n");
+	for (int i = 0; i < 16; i++) {
+		for (int j = 0; j < 16; j++) {
+			if (j == 15) {
+				printf("%d\n", this->pixelObjArray[i][j][0]);
+			}
+			else {
+				printf("%d - ", this->pixelObjArray[i][j][0]);
+			}
+
+		}
+	}
 }
 
 std::vector<double> FileReader::rgbtolab(double r_, double g_, double b_) {

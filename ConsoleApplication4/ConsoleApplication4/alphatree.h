@@ -45,6 +45,6 @@ class AlphaTree {
 		std::vector<Dissimilarity> dissimilarity;
 		std::vector<std::vector<Pixel>> pixelObjArray;
 		std::vector<AlphaLevel> alphatreeLevels;
-		std::vector<int[2]> idConnection;
+		std::vector<std::vector<int>> idConnection;
 };
 #endif 
