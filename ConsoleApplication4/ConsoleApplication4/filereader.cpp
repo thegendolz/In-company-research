@@ -45,18 +45,18 @@ FileReader::FileReader() {
 		}
 	}
 
-	printf("--------[Image: %d]--------\n");
+	/*printf("--------[Image]--------\n");
 	for (int i = 0; i < 16; i++) {
 		for (int j = 0; j < 16; j++) {
 			if (j == 15) {
-				printf("%d\n", this->pixelObjArray[i][j][0]);
+				printf("%.2f \n", this->pixelObjArray[i][j][0]);
 			}
 			else {
-				printf("%d - ", this->pixelObjArray[i][j][0]);
+				printf("%.2f - ", this->pixelObjArray[i][j][0]);
 			}
 
 		}
-	}
+	}*/
 }
 
 std::vector<double> FileReader::rgbtolab(double r_, double g_, double b_) {
