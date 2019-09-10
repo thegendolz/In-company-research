@@ -4,7 +4,12 @@
 #include <algorithm> 
 #include <vector>
 #include <iostream>
+#include "opencv2/core/core.hpp"
+#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/imgproc/imgproc.hpp"
 #include <time.h>
+
+using namespace cv;
 
 AlphaTree::AlphaTree(){
 	alphaLevel = 0;
@@ -45,7 +50,7 @@ void AlphaTree::finishTree(int image_height, int image_width) {
 				}
 			}
 		}*/
-		doAlphaStep(image_height, image_width, false);
+		//doAlphaStep(image_height, image_width, false);
 	//}
 }
 
@@ -79,6 +84,19 @@ void AlphaTree::doAlphaStep(int image_height, int image_width, bool initialize) 
 		else break;
 	}
 
+	for (int i = 0; i < 16; i++) {
+		for (int j = 0; j < 16; j++) {
+			if (j == 15) {
+				printf("%d\n", findRoot(getPixel(i, j).parent)->id);
+				//printf("%d\n", ap.getPixel(i, j).id);
+			}
+			else {
+				printf("%d - ", findRoot(getPixel(i, j).parent)->id);
+				//printf("%d - ", ap.getPixel(i, j).id);
+			}
+		}
+	}
+
 	findTrafficSigns(image_height, image_width);
 
 	if (dissimilarity.size() == 0) this->bottomReached = true;
@@ -86,30 +104,41 @@ void AlphaTree::doAlphaStep(int image_height, int image_width, bool initialize) 
 	alphaLevel++;
 }
 
+Pixel* AlphaTree::findRoot(Pixel *pixel) {
+	isRoot = *pixel;
+	a++;
+	if (pixel == isRoot.parent) {
+		return pixel;
+	}
+	else {
+		pixel->parent = findRoot(isRoot.parent);
+	}
+}
+
 void AlphaTree::findTrafficSigns(int height, int width) {
 	//#########################################
 	//#	This part is for finding the clusters #
 	//#########################################
 	idConnection.clear();
-	printf("TEST 1");
 	std::vector<std::vector<Pixel>> vector;
 	for (int n = 0; n < height; n++) {
 		for (int m = 0; m < width; m++) {
 			//This part finds all the clusters and pushes them to an Array containing all pixel objects for each cluster (Found by ID), this will make it easier to find the traffic signs
-			int id = this->resetAndFindId(this->pixelObjArray[n][m].id);
+			int id = this->resetAndFindId(this->findRoot(getPixel(n, m).parent)->id);
 			//printf("idconnection3: %d", idConnection.size());
+
 			if(id == vector.size()){
 				vector.push_back(std::vector<Pixel>());
 			}
 			vector[id].push_back(this->pixelObjArray[n][m]);
 		}
 	}
-	printf("TEST CLUSTER: %d", vector.size());
+	printf("# Cluster: %d \n", vector.size());
 	//Once the clusters are made, the positions of all the pixels have to be determined within the cluster
 	std::vector<std::vector<int>> cluster;
 	for (int i = 0; i < vector.size(); i++) {
-		if (vector[i].size() > 5) {
-			printf("TEST 0.5");
+		if (vector[i].size() > 10) {
+			printf("# Cluster: %d \n", vector[i].size());
 			int lowX = -1, lowY = -1, highX = -1, highY = -1;
 			for (int j = 0; j < vector[i].size(); j++) {
 				if (vector[i][j].x < lowX || lowX == -1) lowX = vector[i][j].x;
@@ -118,19 +147,32 @@ void AlphaTree::findTrafficSigns(int height, int width) {
 				if (vector[i][j].y > highY || highY == -1) highY = vector[i][j].y;
 			}
 
-			int diffX = highX - lowX;
-			int diffY = highY - lowY;
+			//+1 since array starts from 0 - X
+			int diffX = (highX - lowX)+1;
+			int diffY = (highY - lowY)+1;
+			int diff = diffX < diffY ? diffY : diffX;
 
 			//std::vector<std::vector<std::vector<double>>>(img.rows, std::vector<std::vector<double>>(img.cols, std::vector <double>(3)));
 
-			cluster = std::vector<std::vector<int>>(diffY, std::vector<int>(diffX));
-			printf("TEST 2");
+			cluster = std::vector<std::vector<int>>(diff, std::vector<int>(diff));
 			for (int j = 0; j < vector[i].size(); j++) {
-				cluster[vector[i].at(j).y - lowY][vector[i].at(j).x - lowX] = vector[i].at(j).value[0];
+				cluster[vector[i][j].y - lowY][vector[i][j].x - lowX] = 255;
 			}
 
-			//Here is the cluster with the correct objects, now check if it is a traffic sign
-			printf("TEST 3 \n");
+			//Now that we have the clusters, perform Decision tree for correct traffic sign
+			// Is is a triangle? What colors? 
+			cv::Mat image(diff, diff, CV_64FC1);
+
+			for (int i = 0; i < image.rows; ++i)
+				for (int j = 0; j < image.cols; ++j)
+					image.at<double>(i, j) = (double)cluster[i][j];
+
+			Mat bigger(512, 512, CV_8UC1);
+			cv::resize(image, bigger, bigger.size(), 0, 0, INTER_NEAREST);
+			//cv::resizeWindow("Display frame", 600, 600);
+			cv::imshow("test", bigger);
+			cv::waitKey(0);
+
 			//##############################################
 			//#	This part is for finding the traffic signs #
 			//##############################################
@@ -160,6 +202,7 @@ void AlphaTree::findTrafficSigns(int height, int width) {
 }
 
 int AlphaTree::resetAndFindId(int current_id) {
+	current_id;
 	for (int i = 0; i < idConnection.size(); i++) {
 		if (idConnection[i][1] == current_id) {
 			return idConnection[i][0];
@@ -170,16 +213,6 @@ int AlphaTree::resetAndFindId(int current_id) {
 	return idConnection.at(idConnection.size() - 1).at(0);
 }
 
-Pixel* AlphaTree::findRoot(Pixel *pixel) {
-	isRoot = *pixel;
-	a++;
-	if (pixel == isRoot.parent) {
-		return pixel;
-	}
-	else {
-		pixel->parent = findRoot(isRoot.parent);
-	}
-}
 
 void AlphaTree::findAllDissimilarities(int height, int width, std::vector<std::vector<std::vector<double>>> image) {
 	for (int n = 0; n < height-1; n++) {
