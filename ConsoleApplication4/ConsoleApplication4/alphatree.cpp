@@ -3,6 +3,8 @@
 #include "dissimilarity.h"
 #include <algorithm> 
 #include <vector>
+#include <stdio.h>
+#include <stdlib.h>
 #include <iostream>
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -161,17 +163,27 @@ void AlphaTree::findTrafficSigns(int height, int width) {
 
 			//Now that we have the clusters, perform Decision tree for correct traffic sign
 			// Is is a triangle? What colors? 
+			
 			cv::Mat image(diff, diff, CV_64FC1);
-
 			for (int i = 0; i < image.rows; ++i)
 				for (int j = 0; j < image.cols; ++j)
 					image.at<double>(i, j) = (double)cluster[i][j];
 
-			Mat bigger(512, 512, CV_8UC1);
-			cv::resize(image, bigger, bigger.size(), 0, 0, INTER_NEAREST);
+			std::vector<std::vector<Point>> contours;
+			std::vector<Vec4i> hierarchy;
+
+			cv::findContours(image, contours, hierarchy, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE, Point(0,0));
+
+			for (int i = 0; i < contours.size(); i++)
+			{
+				//if()
+			}
+
+			//Mat bigger(512, 512, CV_8UC1);
+			//cv::resize(image, bigger, bigger.size(), 0, 0, INTER_NEAREST);
 			//cv::resizeWindow("Display frame", 600, 600);
-			cv::imshow("test", bigger);
-			cv::waitKey(0);
+			//cv::imshow("test", bigger);
+			//cv::waitKey(0);
 
 			//##############################################
 			//#	This part is for finding the traffic signs #
@@ -190,7 +202,6 @@ void AlphaTree::findTrafficSigns(int height, int width) {
 					}
 				}
 			}
-
 		}
 	}
 
