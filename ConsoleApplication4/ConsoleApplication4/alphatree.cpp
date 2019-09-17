@@ -172,18 +172,28 @@ void AlphaTree::findTrafficSigns(int height, int width) {
 			std::vector<std::vector<Point>> contours;
 			std::vector<Vec4i> hierarchy;
 
-			cv::findContours(image, contours, hierarchy, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE, Point(0,0));
+			cv::Mat tempImage(diff, diff, CV_8UC1);
+			image.convertTo(tempImage, CV_8UC1, 1.0 / 255.0);
+			cv::findContours(tempImage, contours, hierarchy, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE, Point(0,0));
 
+			contours.size();
 			for (int i = 0; i < contours.size(); i++)
 			{
-				//if()
+
+				cv::Mat approx;
+				cv::approxPolyDP(contours[i], approx, 30, true);
+				int a = approx.checkVector(2);
+				printf("approx van triangle: %d", a);
+				if (approx.checkVector(2) == 3) {
+					printf("TRIANGLE!");
+				}
 			}
 
-			//Mat bigger(512, 512, CV_8UC1);
-			//cv::resize(image, bigger, bigger.size(), 0, 0, INTER_NEAREST);
-			//cv::resizeWindow("Display frame", 600, 600);
-			//cv::imshow("test", bigger);
-			//cv::waitKey(0);
+			Mat bigger(512, 512, CV_8UC1);
+			cv::resize(image, bigger, bigger.size(), 0, 0, INTER_NEAREST);
+			cv::resizeWindow("Display frame", 600, 600);
+			cv::imshow("test", bigger);
+			cv::waitKey(0);
 
 			//##############################################
 			//#	This part is for finding the traffic signs #
