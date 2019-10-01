@@ -6,6 +6,7 @@
 #include "filereader.h"
 #include <vector>
 #include "dissimilarity.h"
+#include "recognizer.h"
 
 class AlphaTree {
 	public:
@@ -36,6 +37,7 @@ class AlphaTree {
 		int counter;
 		int a;
 		int b;
+		Recognizer recognizer;
 		bool bottomReached;
 		Dissimilarity diss;
 		AlphaLevel ap;
@@ -46,5 +48,6 @@ class AlphaTree {
 		std::vector<std::vector<Pixel>> pixelObjArray;
 		std::vector<AlphaLevel> alphatreeLevels;
 		std::vector<std::vector<int>> idConnection;
+		//FileReader fileReader;
 };
 #endif 

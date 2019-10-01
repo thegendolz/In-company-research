@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 	AlphaTree ap = AlphaTree();
 	ap.initialize(fileReader);
 
-	//ap.finishTree(fileReader.getImageHeight(), fileReader.getImageWidth());
+	ap.finishTree(fileReader.getImageHeight(), fileReader.getImageWidth());
 
 	//for (int depth = 0; depth < ap.getDepth(); depth++) {
 	//	printf("--------[Tree Depth: %d]--------\n", depth);

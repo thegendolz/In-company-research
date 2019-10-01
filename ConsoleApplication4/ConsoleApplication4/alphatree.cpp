@@ -20,10 +20,13 @@ AlphaTree::AlphaTree(){
 
 void AlphaTree::initialize(FileReader fileReader)
 {
+	//this->fileReader = fileRdr;
 	int image_height = fileReader.getImageHeight();
 	int image_width = fileReader.getImageWidth();
 
 	std::vector<std::vector<std::vector<double>>> image = fileReader.getPixelArray();
+
+	recognizer = Recognizer(fileReader);
 
 	this->pixelObjArray = std::vector<std::vector<Pixel>>(image_height, std::vector <Pixel>(image_width));
 
@@ -37,7 +40,7 @@ void AlphaTree::initialize(FileReader fileReader)
 }
 
 void AlphaTree::finishTree(int image_height, int image_width) {
-	//while (!this->bottomReached) {
+	while (!this->bottomReached) {
 		//printf("step %d \n", this->getDepth());
 		/*printf("--------[Tree Depth: %d]--------\n", alphaLevel);
 		for (int i = 0; i < 16; i++) {
@@ -52,8 +55,8 @@ void AlphaTree::finishTree(int image_height, int image_width) {
 				}
 			}
 		}*/
-		//doAlphaStep(image_height, image_width, false);
-	//}
+		doAlphaStep(image_height, image_width, false);
+	}
 }
 
 int AlphaTree::getDepth() {
@@ -86,7 +89,7 @@ void AlphaTree::doAlphaStep(int image_height, int image_width, bool initialize) 
 		else break;
 	}
 
-	for (int i = 0; i < 16; i++) {
+	/*for (int i = 0; i < 16; i++) {
 		for (int j = 0; j < 16; j++) {
 			if (j == 15) {
 				printf("%d\n", findRoot(getPixel(i, j).parent)->id);
@@ -97,9 +100,10 @@ void AlphaTree::doAlphaStep(int image_height, int image_width, bool initialize) 
 				//printf("%d - ", ap.getPixel(i, j).id);
 			}
 		}
-	}
+	}*/
 
 	findTrafficSigns(image_height, image_width);
+	
 
 	if (dissimilarity.size() == 0) this->bottomReached = true;
 	else this->bottomReached = false;
@@ -161,45 +165,40 @@ void AlphaTree::findTrafficSigns(int height, int width) {
 				cluster[vector[i][j].y - lowY][vector[i][j].x - lowX] = 255;
 			}
 
-			//Now that we have the clusters, perform Decision tree for correct traffic sign
-			// Is is a triangle? What colors? 
-			
-			cv::Mat image(diff, diff, CV_64FC1);
-			for (int i = 0; i < image.rows; ++i)
-				for (int j = 0; j < image.cols; ++j)
-					image.at<double>(i, j) = (double)cluster[i][j];
+			bool isTriangle = recognizer.isTriangle(diff, cluster);
 
-			std::vector<std::vector<Point>> contours;
-			std::vector<Vec4i> hierarchy;
+			if (isTriangle) {
+				int amountOfRed = 0;
+				std::vector<std::vector<std::vector<int>>> clusterColor = std::vector<std::vector<std::vector<int>>>(diff, std::vector<std::vector<int>>(diff, std::vector<int>(3)));
+				for (int j = 0; j < vector[i].size(); j++) {
+					//fileReader.labtorgb(vector[i][j].value[0], vector[i][j].value[1], vector[i][j].value[2]);
+					std::vector<double> colorHSV = vector[i][j].value;
+					if (
+						
+							colorHSV[0] <= 100.0 && colorHSV[0] >= 0.0 &&
+							colorHSV[1] <= 128.0 && colorHSV[1] >= 30.0 &&
+							colorHSV[2] <= 100.0 && colorHSV[2] >= 50.0
+							
+						) {
+						amountOfRed++;
+					}
+				}
+				double percentageRed;
+				if(amountOfRed != 0) percentageRed = vector[i].size() / amountOfRed;
+				else percentageRed = 0;
 
-			cv::Mat tempImage(diff, diff, CV_8UC1);
-			image.convertTo(tempImage, CV_8UC1, 1.0 / 255.0);
-			cv::findContours(tempImage, contours, hierarchy, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE, Point(0,0));
-
-			contours.size();
-			for (int i = 0; i < contours.size(); i++)
-			{
-
-				cv::Mat approx;
-				cv::approxPolyDP(contours[i], approx, 30, true);
-				int a = approx.checkVector(2);
-				printf("approx van triangle: %d", a);
-				if (approx.checkVector(2) == 3) {
-					printf("TRIANGLE!");
+				percentageRed;
+				if (percentageRed <= 0.6 && percentageRed >= 0.1) {
+					printf("DAMES EN HEREN WE HEBBEN EEN TRAFFIC SIGN WHHOEEOEOEOEOOEE");
+					
 				}
 			}
-
-			Mat bigger(512, 512, CV_8UC1);
-			cv::resize(image, bigger, bigger.size(), 0, 0, INTER_NEAREST);
-			cv::resizeWindow("Display frame", 600, 600);
-			cv::imshow("test", bigger);
-			cv::waitKey(0);
-
+			
 			//##############################################
 			//#	This part is for finding the traffic signs #
 			//##############################################
 
-			printf("--------[Clusters]--------\n");
+			/*printf("--------[Clusters]--------\n");
 			for (int i = 0; i < cluster.size(); i++) {
 				for (int j = 0; j < cluster[i].size(); j++) {
 					if (j == cluster[i].size()-1) {
@@ -211,14 +210,9 @@ void AlphaTree::findTrafficSigns(int height, int width) {
 						//printf("%d - ", ap.getPixel(i, j).id);
 					}
 				}
-			}
+			}*/
 		}
 	}
-
-	//Recognize shape
-
-
-
 	//Recognize color
 }
 
