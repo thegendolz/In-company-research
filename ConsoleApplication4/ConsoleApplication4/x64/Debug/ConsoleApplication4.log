@@ -1,9 +1,4 @@
 ﻿  alphatree.cpp
-c:\users\siebert\documents\in-company research project\in-company-research\in-company-research\consoleapplication4\consoleapplication4\alphatree.cpp(187): warning C4244: '=': conversion from 'unsigned __int64' to 'double', possible loss of data
-c:\users\siebert\documents\in-company research project\in-company-research\in-company-research\consoleapplication4\consoleapplication4\alphatree.cpp(142): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'unsigned __int64'
-  c:\users\siebert\documents\in-company research project\in-company-research\in-company-research\consoleapplication4\consoleapplication4\alphatree.cpp(142): note: consider using '%zd' in the format string
-c:\users\siebert\documents\in-company research project\in-company-research\in-company-research\consoleapplication4\consoleapplication4\alphatree.cpp(147): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'unsigned __int64'
-  c:\users\siebert\documents\in-company research project\in-company-research\in-company-research\consoleapplication4\consoleapplication4\alphatree.cpp(147): note: consider using '%zd' in the format string
-c:\users\siebert\documents\in-company research project\in-company-research\in-company-research\consoleapplication4\consoleapplication4\alphatree.cpp(267): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-c:\users\siebert\documents\in-company research project\in-company-research\in-company-research\consoleapplication4\consoleapplication4\alphatree.cpp(122): warning C4715: 'AlphaTree::findRoot': not all control paths return a value
-  ConsoleApplication4.vcxproj -> C:\Users\Siebert\Documents\in-company research project\In-company-research\In-company-research\ConsoleApplication4\Alphatree.exe
+e:\in-company research project\in-company-research\consoleapplication4\consoleapplication4\alphatree.cpp(263): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+e:\in-company research project\in-company-research\consoleapplication4\consoleapplication4\alphatree.cpp(109): warning C4715: 'AlphaTree::findRoot': not all control paths return a value
+  ConsoleApplication4.vcxproj -> E:\In-company research project\In-company-research\ConsoleApplication4\Alphatree.exe

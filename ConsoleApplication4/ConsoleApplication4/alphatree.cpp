@@ -20,7 +20,6 @@ AlphaTree::AlphaTree(){
 
 void AlphaTree::initialize(FileReader fileReader)
 {
-	//this->fileReader = fileRdr;
 	int image_height = fileReader.getImageHeight();
 	int image_width = fileReader.getImageWidth();
 
@@ -42,19 +41,7 @@ void AlphaTree::initialize(FileReader fileReader)
 void AlphaTree::finishTree(int image_height, int image_width) {
 	while (!this->bottomReached) {
 		//printf("step %d \n", this->getDepth());
-		/*printf("--------[Tree Depth: %d]--------\n", alphaLevel);
-		for (int i = 0; i < 16; i++) {
-			for (int j = 0; j < 16; j++) {
-				if (j == 15) {
-					printf("%d\n", findRoot(getPixel(i, j).parent)->id);
-					//printf("%d\n", ap.getPixel(i, j).id);
-				}
-				else {
-					printf("%d - ", findRoot(getPixel(i, j).parent)->id);
-					//printf("%d - ", ap.getPixel(i, j).id);
-				}
-			}
-		}*/
+		printf("--------[Tree Depth: %d]--------\n", alphaLevel);
 		doAlphaStep(image_height, image_width, false);
 	}
 }
@@ -139,12 +126,12 @@ void AlphaTree::findTrafficSigns(int height, int width) {
 			vector[id].push_back(this->pixelObjArray[n][m]);
 		}
 	}
-	printf("# Cluster: %d \n", vector.size());
+	//printf("# Cluster: %d \n", vector.size());
 	//Once the clusters are made, the positions of all the pixels have to be determined within the cluster
 	std::vector<std::vector<int>> cluster;
 	for (int i = 0; i < vector.size(); i++) {
 		if (vector[i].size() > 10) {
-			printf("# Cluster: %d \n", vector[i].size());
+			//printf("# Cluster: %d \n", vector[i].size());
 			int lowX = -1, lowY = -1, highX = -1, highY = -1;
 			for (int j = 0; j < vector[i].size(); j++) {
 				if (vector[i][j].x < lowX || lowX == -1) lowX = vector[i][j].x;
@@ -171,7 +158,6 @@ void AlphaTree::findTrafficSigns(int height, int width) {
 				int amountOfRed = 0;
 				std::vector<std::vector<std::vector<int>>> clusterColor = std::vector<std::vector<std::vector<int>>>(diff, std::vector<std::vector<int>>(diff, std::vector<int>(3)));
 				for (int j = 0; j < vector[i].size(); j++) {
-					//fileReader.labtorgb(vector[i][j].value[0], vector[i][j].value[1], vector[i][j].value[2]);
 					std::vector<double> colorHSV = vector[i][j].value;
 					if (
 						
@@ -183,11 +169,21 @@ void AlphaTree::findTrafficSigns(int height, int width) {
 						amountOfRed++;
 					}
 				}
-				double percentageRed;
-				if(amountOfRed != 0) percentageRed = vector[i].size() / amountOfRed;
-				else percentageRed = 0;
 
-				percentageRed;
+				double percentageRed;
+				if(amountOfRed != 0) percentageRed = (double)amountOfRed / (double)vector[i].size();
+				else percentageRed = 0.0;
+
+				//printf("Percentage Red: %d \n", percentageRed);
+				/*printf("Amount of Red: %d \n", amountOfRed);
+				printf("Amount of Other: %d \n", vector[i].size());
+				printf("Percentage: %f \n", percentageRed);
+				if (percentageRed != 0.0 && percentageRed != 1.0) {
+					percentageRed;
+					amountOfRed;
+					printf("Other");
+				}*/
+
 				if (percentageRed <= 0.6 && percentageRed >= 0.1) {
 					printf("DAMES EN HEREN WE HEBBEN EEN TRAFFIC SIGN WHHOEEOEOEOEOOEE");
 					

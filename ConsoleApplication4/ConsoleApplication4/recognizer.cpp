@@ -44,7 +44,7 @@ bool Recognizer::isTriangle(int sizeOfTriangle, std::vector<std::vector<int>> cl
 		cv::Mat approx;
 		cv::approxPolyDP(contours[i], approx, 30, true);
 		int a = approx.checkVector(2);
-		printf("approx van triangle: %d", a);
+		//printf("approx van triangle: %d", a);
 		//Checks if the contour is a Triangle
 		if (approx.checkVector(2) == 3) {
 			return true;
