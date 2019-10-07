@@ -11,7 +11,7 @@ using namespace cv;
 
 FileReader::FileReader() {
 
-	Mat img = imread("stopbord.png", 1);
+	Mat img = imread("test_3.png", 1);
 
 	if (!img.data) {
 		//printf("%d \n", img[0][0])
@@ -44,7 +44,8 @@ FileReader::FileReader() {
 
 		}
 	}
-
+	//cv::imshow("test", img);
+	//cv::waitKey(0);
 	/*printf("--------[Image]--------\n");
 	for (int i = 0; i < 16; i++) {
 		for (int j = 0; j < 16; j++) {

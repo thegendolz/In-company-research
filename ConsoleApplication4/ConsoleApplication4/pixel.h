@@ -13,7 +13,7 @@ class Pixel {
 		Pixel();
 		Pixel *parent;
 		std::vector<double> value;
-		short id;
+		int id;
 		short x;
 		short y;
 };

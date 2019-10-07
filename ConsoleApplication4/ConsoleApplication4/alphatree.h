@@ -28,7 +28,7 @@ class AlphaTree {
 		//This function gets the id of a pixel at a certain alphalevel
 		int getPixelValueAtAlphaLevel(int level, int image_height, int image_width);
 		void findAllDissimilarities(int image_height, int image_width, std::vector<std::vector<std::vector<double>>> image);
-
+		std::vector<int> labtorgb(double l_, double a_, double b_);
 	private:
 		//Variables
 		int alphaLevel;

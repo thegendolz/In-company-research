@@ -6,12 +6,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
+#include <math.h>
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 #include <time.h>
+#include <map>  
+#include <unordered_map>  
 
 using namespace cv;
+using namespace std;
+typedef map<int, int>::iterator mi;
 
 AlphaTree::AlphaTree(){
 	alphaLevel = 0;
@@ -32,9 +37,9 @@ void AlphaTree::initialize(FileReader fileReader)
 	clock_t step1 = clock();
 	this->findAllDissimilarities(image_height, image_width, image);
 	clock_t step2 = clock();
-	//printf("dissim: %.2fs\n", (double)(step2 - step1) / CLOCKS_PER_SEC);
+	printf("dissim: %.2fs\n", (double)(step2 - step1) / CLOCKS_PER_SEC);
 
-	//printf("size: %d \n", dissimilarity.size());
+	printf("size: %d \n", dissimilarity.size());
 	doAlphaStep(image_height, image_width, true);
 }
 
@@ -75,23 +80,7 @@ void AlphaTree::doAlphaStep(int image_height, int image_width, bool initialize) 
 		if(dissimilarity.size() > 0) diss = dissimilarity.at(0);
 		else break;
 	}
-
-	/*for (int i = 0; i < 16; i++) {
-		for (int j = 0; j < 16; j++) {
-			if (j == 15) {
-				printf("%d\n", findRoot(getPixel(i, j).parent)->id);
-				//printf("%d\n", ap.getPixel(i, j).id);
-			}
-			else {
-				printf("%d - ", findRoot(getPixel(i, j).parent)->id);
-				//printf("%d - ", ap.getPixel(i, j).id);
-			}
-		}
-	}*/
-
 	findTrafficSigns(image_height, image_width);
-	
-
 	if (dissimilarity.size() == 0) this->bottomReached = true;
 	else this->bottomReached = false;
 	alphaLevel++;
@@ -112,102 +101,123 @@ void AlphaTree::findTrafficSigns(int height, int width) {
 	//#########################################
 	//#	This part is for finding the clusters #
 	//#########################################
+	//CounterMap counts;
+	std::unordered_map<int, int> occurrences;
+	for (int n = 0; n < height; n++) {
+		for (int m = 0; m < width; m++) {
+			++occurrences[this->findRoot(getPixel(n, m).parent)->id];
+		}
+	}
+	occurrences;
+
+
+	/*	for (const auto &x : occurrences) {
+		if (x.second > 20) {
+			int a = x.first;
+			a;
+			*/
 	idConnection.clear();
 	std::vector<std::vector<Pixel>> vector;
 	for (int n = 0; n < height; n++) {
 		for (int m = 0; m < width; m++) {
-			//This part finds all the clusters and pushes them to an Array containing all pixel objects for each cluster (Found by ID), this will make it easier to find the traffic signs
-			int id = this->resetAndFindId(this->findRoot(getPixel(n, m).parent)->id);
-			//printf("idconnection3: %d", idConnection.size());
+			if (occurrences.at(this->findRoot(getPixel(n, m).parent)->id) > 200) {
+				//This part finds all the clusters and pushes them to an Array containing all pixel objects for each cluster (Found by ID), this will make it easier to find the traffic signs
+				int id = this->resetAndFindId(this->findRoot(getPixel(n, m).parent)->id);
+				//printf("idconnection3: %d", idConnection.size());
 
-			if(id == vector.size()){
-				vector.push_back(std::vector<Pixel>());
+				if (id == vector.size()) {
+					vector.push_back(std::vector<Pixel>());
+				}
+				vector[id].push_back(this->pixelObjArray[n][m]);
 			}
-			vector[id].push_back(this->pixelObjArray[n][m]);
 		}
 	}
-	//printf("# Cluster: %d \n", vector.size());
+	printf("# Cluster: %d \n", vector.size());
 	//Once the clusters are made, the positions of all the pixels have to be determined within the cluster
 	std::vector<std::vector<int>> cluster;
 	for (int i = 0; i < vector.size(); i++) {
-		if (vector[i].size() > 10) {
-			//printf("# Cluster: %d \n", vector[i].size());
-			int lowX = -1, lowY = -1, highX = -1, highY = -1;
-			for (int j = 0; j < vector[i].size(); j++) {
-				if (vector[i][j].x < lowX || lowX == -1) lowX = vector[i][j].x;
-				if (vector[i][j].y < lowY || lowY == -1) lowY = vector[i][j].y;
-				if (vector[i][j].x > highX || highX == -1) highX = vector[i][j].x;
-				if (vector[i][j].y > highY || highY == -1) highY = vector[i][j].y;
-			}
-
-			//+1 since array starts from 0 - X
-			int diffX = (highX - lowX)+1;
-			int diffY = (highY - lowY)+1;
-			int diff = diffX < diffY ? diffY : diffX;
-
-			//std::vector<std::vector<std::vector<double>>>(img.rows, std::vector<std::vector<double>>(img.cols, std::vector <double>(3)));
-
-			cluster = std::vector<std::vector<int>>(diff, std::vector<int>(diff));
-			for (int j = 0; j < vector[i].size(); j++) {
-				cluster[vector[i][j].y - lowY][vector[i][j].x - lowX] = 255;
-			}
-
-			bool isTriangle = recognizer.isTriangle(diff, cluster);
-
-			if (isTriangle) {
-				int amountOfRed = 0;
-				std::vector<std::vector<std::vector<int>>> clusterColor = std::vector<std::vector<std::vector<int>>>(diff, std::vector<std::vector<int>>(diff, std::vector<int>(3)));
-				for (int j = 0; j < vector[i].size(); j++) {
-					std::vector<double> colorHSV = vector[i][j].value;
-					if (
-						
-							colorHSV[0] <= 100.0 && colorHSV[0] >= 0.0 &&
-							colorHSV[1] <= 128.0 && colorHSV[1] >= 30.0 &&
-							colorHSV[2] <= 100.0 && colorHSV[2] >= 50.0
-							
-						) {
-						amountOfRed++;
-					}
-				}
-
-				double percentageRed;
-				if(amountOfRed != 0) percentageRed = (double)amountOfRed / (double)vector[i].size();
-				else percentageRed = 0.0;
-
-				//printf("Percentage Red: %d \n", percentageRed);
-				/*printf("Amount of Red: %d \n", amountOfRed);
-				printf("Amount of Other: %d \n", vector[i].size());
-				printf("Percentage: %f \n", percentageRed);
-				if (percentageRed != 0.0 && percentageRed != 1.0) {
-					percentageRed;
-					amountOfRed;
-					printf("Other");
-				}*/
-
-				if (percentageRed <= 0.6 && percentageRed >= 0.1) {
-					printf("DAMES EN HEREN WE HEBBEN EEN TRAFFIC SIGN WHHOEEOEOEOEOOEE");
-					
-				}
-			}
-			
-			//##############################################
-			//#	This part is for finding the traffic signs #
-			//##############################################
-
-			/*printf("--------[Clusters]--------\n");
-			for (int i = 0; i < cluster.size(); i++) {
-				for (int j = 0; j < cluster[i].size(); j++) {
-					if (j == cluster[i].size()-1) {
-						printf("%d \n", cluster[i][j]);
-						//printf("%d\n", ap.getPixel(i, j).id);
-					}
-					else {
-						printf("%d - ", cluster[i][j]);
-						//printf("%d - ", ap.getPixel(i, j).id);
-					}
-				}
-			}*/
+		//printf("# Cluster: %d \n", vector[i].size());
+		int lowX = -1, lowY = -1, highX = -1, highY = -1;
+		for (int j = 0; j < vector[i].size(); j++) {
+			if (vector[i][j].x < lowX || lowX == -1) lowX = vector[i][j].x;
+			if (vector[i][j].y < lowY || lowY == -1) lowY = vector[i][j].y;
+			if (vector[i][j].x > highX || highX == -1) highX = vector[i][j].x;
+			if (vector[i][j].y > highY || highY == -1) highY = vector[i][j].y;
 		}
+
+		//+1 since array starts from 0 - X
+		int diffX = (highX - lowX)+1;
+		int diffY = (highY - lowY)+1;
+		int diff = diffX < diffY ? diffY : diffX;
+
+		//std::vector<std::vector<std::vector<double>>>(img.rows, std::vector<std::vector<double>>(img.cols, std::vector <double>(3)));
+
+		cluster = std::vector<std::vector<int>>(diff, std::vector<int>(diff));
+		for (int j = 0; j < vector[i].size(); j++) {
+			cluster[vector[i][j].y - lowY][vector[i][j].x - lowX] = 255;
+		}
+
+		bool isTriangle = recognizer.isTriangle(diff, cluster);
+		//isTriangle = false;
+
+		if (isTriangle) {
+			int amountOfRed = 0;
+			int amountOfWhite = 0;
+			std::vector<std::vector<std::vector<int>>> clusterColor = std::vector<std::vector<std::vector<int>>>(diff, std::vector<std::vector<int>>(diff, std::vector<int>(3)));
+			for (int j = 0; j < vector[i].size(); j++) {
+				std::vector<int> colorRGB = labtorgb(vector[i][j].value[0], vector[i][j].value[1], vector[i][j].value[2]);
+				colorRGB;
+				if (
+						
+						colorRGB[0] <= 255 && colorRGB[0] >= 64 &&
+						colorRGB[1] <= 64 && colorRGB[1] >= 0 &&
+						colorRGB[2] <= 64 && colorRGB[2] >= 0
+							
+					) {
+					amountOfRed++;
+				}
+
+				if (
+
+					colorRGB[0] <= 255 && colorRGB[0] >= 100 &&
+					colorRGB[1] <= 255 && colorRGB[1] >= 100 &&
+					colorRGB[2] <= 255 && colorRGB[2] >= 100
+
+					) {
+					amountOfWhite++;
+				}
+			}
+
+			double percentageRed;
+			if(amountOfRed != 0) percentageRed = (double)amountOfRed / (double)vector[i].size();
+			else percentageRed = 0.0;
+
+			double percentageWhite;
+			if (amountOfRed != 0) percentageWhite = (double)amountOfWhite / (double)vector[i].size();
+			else percentageWhite = 0.0;
+
+			printf("PercentageRed: %lf, PercentageWhite: %lf \n", percentageRed, percentageWhite);
+
+			if (percentageRed <= 0.5 && percentageRed >= 0.2 && percentageWhite >= 0.2 && percentageWhite <= 0.6) {
+				printf("DAMES EN HEREN WE HEBBEN EEN TRAFFIC SIGN WHHOEEOEOEOEOOEE");
+					
+				cv::Mat image(diff, diff, CV_8UC3, Scalar(0, 0, 0));
+				for (int n = 0; n < diff; n++) {
+					image.at<Vec3b>(Point(vector[i][n].x - lowX, vector[i][n].y - lowY)) = cv::Vec3b(0, 0, 0);
+				}
+
+				for (int j = 0; j < vector[i].size(); ++j) {
+					std::vector<int> colorRGB = labtorgb(vector[i][j].value[0], vector[i][j].value[1], vector[i][j].value[2]);
+					//Other way around since Opencv uses BGR instead of RGB
+					image.at<Vec3b>(Point(vector[i][j].x - lowX, vector[i][j].y - lowY)) = cv::Vec3b(colorRGB[2], colorRGB[1], colorRGB[0]);
+				}
+				//Mat bigger(512, 512, CV_8UC3, Scalar(0,0,0));
+				//cv::resize(image, bigger, bigger.size(), 0, 0, INTER_NEAREST);
+				//cv::resizeWindow("Display frame", 600, 600);
+				cv::imshow("test", image);
+				cv::waitKey(0);
+			}
+		}		
 	}
 	//Recognize color
 }
@@ -260,9 +270,7 @@ int AlphaTree::calculateDissimilarity(std::vector<double> position_1, std::vecto
 	double a = pow(position_2[1] - position_1[1], 2);
 	double b = pow(position_2[2] - position_1[2], 2);
 
-	return sqrt(l + a + b);
-
-	//return abs(position_1 - position_2);
+	return floor(sqrt(l + a + b));
 }
 
 void AlphaTree::setPixel(int n, int m, std::vector<double> lab) {
@@ -278,4 +286,25 @@ Pixel AlphaTree::getPixel(int height, int width) {
 
 int AlphaTree::getPixelValueAtAlphaLevel(int level, int height, int width) {
 	return this->alphatreeLevels.at(level).getPixel(height, width);
+}
+
+std::vector<int> AlphaTree::labtorgb(double l_, double a_, double b_) {
+	double y = (l_ + 16.0) / 116.0,
+		x = a_ / 500.0 + y,
+		z = y - b_ / 200.0,
+		r, g, b;
+
+	x = 0.95047 * ((x * x * x > 0.008856) ? x * x * x : (x - 16 / 116) / 7.787);
+	y = 1.00000 * ((y * y * y > 0.008856) ? y * y * y : (y - 16 / 116) / 7.787);
+	z = 1.08883 * ((z * z * z > 0.008856) ? z * z * z : (z - 16 / 116) / 7.787);
+
+	r = x * 3.2406 + y * -1.5372 + z * -0.4986;
+	g = x * -0.9689 + y * 1.8758 + z * 0.0415;
+	b = x * 0.0557 + y * -0.2040 + z * 1.0570;
+
+	r = (r > 0.0031308) ? (1.055 * pow(r, 1 / 2.4) - 0.055) : 12.92 * r;
+	g = (g > 0.0031308) ? (1.055 * pow(g, 1 / 2.4) - 0.055) : 12.92 * g;
+	b = (b > 0.0031308) ? (1.055 * pow(b, 1 / 2.4) - 0.055) : 12.92 * b;
+
+	return std::vector<int>{ (int) floor(max(0.0, min(1.0, r)) * 255.0), (int) floor(max(0.0, min(1.0, g)) * 255.0), (int) floor(max(0.0, min(1.0, b)) * 255.0)};
 }

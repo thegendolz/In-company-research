@@ -5,6 +5,7 @@
 #include <vector>
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <iostream>
 #include "opencv2/core/core.hpp"
 #include "opencv2/highgui/highgui.hpp"
@@ -42,20 +43,21 @@ bool Recognizer::isTriangle(int sizeOfTriangle, std::vector<std::vector<int>> cl
 	{
 
 		cv::Mat approx;
-		cv::approxPolyDP(contours[i], approx, 30, true);
+		cv::approxPolyDP(contours[i], approx, 20, true);
 		int a = approx.checkVector(2);
 		//printf("approx van triangle: %d", a);
 		//Checks if the contour is a Triangle
+		//  && (cluster[floor(cluster.size()/2)][floor(cluster[0].size() / 2)] == 0)
 		if (approx.checkVector(2) == 3) {
+			/*Mat bigger(512, 512, CV_8UC1);
+			cv::resize(image, bigger, bigger.size(), 0, 0, INTER_NEAREST);
+			cv::resizeWindow("Display frame", 600, 600);
+			cv::imshow("test", bigger);
+			cv::waitKey(0);*/
 			return true;
 		}
 	}
-	return false;
-	/*Mat bigger(512, 512, CV_8UC1);
-	cv::resize(image, bigger, bigger.size(), 0, 0, INTER_NEAREST);
-	cv::resizeWindow("Display frame", 600, 600);
-	cv::imshow("test", bigger);
-	cv::waitKey(0);*/
+	//return false;
 }
 
 bool Recognizer::isRed(int sizeOfTriangle, std::vector<std::vector<std::vector<int>>> cluster) {
