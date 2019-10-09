@@ -37,9 +37,9 @@ void AlphaTree::initialize(FileReader fileReader)
 	clock_t step1 = clock();
 	this->findAllDissimilarities(image_height, image_width, image);
 	clock_t step2 = clock();
-	printf("dissim: %.2fs\n", (double)(step2 - step1) / CLOCKS_PER_SEC);
+	printf("Initialization: %.2fs\n", (double)(step2 - step1) / CLOCKS_PER_SEC);
 
-	printf("size: %d \n", dissimilarity.size());
+	//printf("size: %d \n", dissimilarity.size());
 	doAlphaStep(image_height, image_width, true);
 }
 
@@ -80,7 +80,7 @@ void AlphaTree::doAlphaStep(int image_height, int image_width, bool initialize) 
 		if(dissimilarity.size() > 0) diss = dissimilarity.at(0);
 		else break;
 	}
-	findTrafficSigns(image_height, image_width);
+	//findTrafficSigns(image_height, image_width);
 	if (dissimilarity.size() == 0) this->bottomReached = true;
 	else this->bottomReached = false;
 	alphaLevel++;

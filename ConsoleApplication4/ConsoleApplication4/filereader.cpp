@@ -11,7 +11,7 @@ using namespace cv;
 
 FileReader::FileReader() {
 
-	Mat img = imread("test_3.png", 1);
+	Mat img = imread("test1024x768.png", 1);
 
 	if (!img.data) {
 		//printf("%d \n", img[0][0])
