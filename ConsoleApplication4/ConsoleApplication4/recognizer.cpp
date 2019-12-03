@@ -49,8 +49,8 @@ bool Recognizer::isTriangle(int sizeOfTriangle, std::vector<std::vector<int>> cl
 		//Checks if the contour is a Triangle
 		//  && (cluster[floor(cluster.size()/2)][floor(cluster[0].size() / 2)] == 0)
 		if (approx.checkVector(2) == 3) {
-			/*Mat bigger(512, 512, CV_8UC1);
-			cv::resize(image, bigger, bigger.size(), 0, 0, INTER_NEAREST);
+			Mat bigger(512, 512, CV_8UC1);
+			/*cv::resize(image, bigger, bigger.size(), 0, 0, INTER_NEAREST);
 			cv::resizeWindow("Display frame", 600, 600);
 			cv::imshow("test", bigger);
 			cv::waitKey(0);*/

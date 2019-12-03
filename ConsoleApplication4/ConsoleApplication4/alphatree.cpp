@@ -80,7 +80,7 @@ void AlphaTree::doAlphaStep(int image_height, int image_width, bool initialize) 
 		if(dissimilarity.size() > 0) diss = dissimilarity.at(0);
 		else break;
 	}
-	//findTrafficSigns(image_height, image_width);
+	findTrafficSigns(image_height, image_width);
 	if (dissimilarity.size() == 0) this->bottomReached = true;
 	else this->bottomReached = false;
 	alphaLevel++;
@@ -211,9 +211,9 @@ void AlphaTree::findTrafficSigns(int height, int width) {
 					//Other way around since Opencv uses BGR instead of RGB
 					image.at<Vec3b>(Point(vector[i][j].x - lowX, vector[i][j].y - lowY)) = cv::Vec3b(colorRGB[2], colorRGB[1], colorRGB[0]);
 				}
-				//Mat bigger(512, 512, CV_8UC3, Scalar(0,0,0));
-				//cv::resize(image, bigger, bigger.size(), 0, 0, INTER_NEAREST);
-				//cv::resizeWindow("Display frame", 600, 600);
+				Mat bigger(1024, 1024, CV_8UC3, Scalar(0,0,0));
+				cv::resize(image, bigger, bigger.size(), 0, 0, INTER_NEAREST);
+				cv::resizeWindow("Display frame", 600, 600);
 				cv::imshow("test", image);
 				cv::waitKey(0);
 			}

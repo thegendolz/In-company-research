@@ -11,7 +11,7 @@ using namespace cv;
 
 FileReader::FileReader() {
 
-	Mat img = imread("test1024x768.png", 1);
+	Mat img = imread("test_3.png", 1);
 
 	if (!img.data) {
 		//printf("%d \n", img[0][0])
@@ -41,7 +41,6 @@ FileReader::FileReader() {
 			this->pixelObjArray[i][j][0] = pixel[0];
 			this->pixelObjArray[i][j][1] = pixel[1];
 			this->pixelObjArray[i][j][2] = pixel[2];
-
 		}
 	}
 	//cv::imshow("test", img);

@@ -1,14 +1,6 @@
-﻿  filereader.cpp
-e:\in-company research project\in-company-research\consoleapplication4\consoleapplication4\filereader.cpp(90): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-e:\in-company research project\in-company-research\consoleapplication4\consoleapplication4\filereader.cpp(91): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-e:\in-company research project\in-company-research\consoleapplication4\consoleapplication4\filereader.cpp(92): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-e:\in-company research project\in-company-research\consoleapplication4\consoleapplication4\filereader.cpp(95): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-e:\in-company research project\in-company-research\consoleapplication4\consoleapplication4\filereader.cpp(96): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-e:\in-company research project\in-company-research\consoleapplication4\consoleapplication4\filereader.cpp(97): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-e:\in-company research project\in-company-research\consoleapplication4\consoleapplication4\filereader.cpp(99): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-e:\in-company research project\in-company-research\consoleapplication4\consoleapplication4\filereader.cpp(100): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-e:\in-company research project\in-company-research\consoleapplication4\consoleapplication4\filereader.cpp(101): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-e:\in-company research project\in-company-research\consoleapplication4\consoleapplication4\filereader.cpp(103): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-e:\in-company research project\in-company-research\consoleapplication4\consoleapplication4\filereader.cpp(104): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-e:\in-company research project\in-company-research\consoleapplication4\consoleapplication4\filereader.cpp(105): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-  ConsoleApplication4.vcxproj -> E:\In-company research project\In-company-research\ConsoleApplication4\Alphatree.exe
+﻿  alphatree.cpp
+C:\Users\Siebert\Documents\In-company-research\In-company-research\ConsoleApplication4\ConsoleApplication4\alphatree.cpp(135,9): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'unsigned __int64'
+C:\Users\Siebert\Documents\In-company-research\In-company-research\ConsoleApplication4\ConsoleApplication4\alphatree.cpp(135,9): message : consider using '%zd' in the format string
+C:\Users\Siebert\Documents\In-company-research\In-company-research\ConsoleApplication4\ConsoleApplication4\alphatree.cpp(273,14): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
+C:\Users\Siebert\Documents\In-company-research\In-company-research\ConsoleApplication4\ConsoleApplication4\alphatree.cpp(98): warning C4715: 'AlphaTree::findRoot': not all control paths return a value
+  ConsoleApplication4.vcxproj -> C:\Users\Siebert\Documents\In-company-research\In-company-research\ConsoleApplication4\Alphatree.exe
