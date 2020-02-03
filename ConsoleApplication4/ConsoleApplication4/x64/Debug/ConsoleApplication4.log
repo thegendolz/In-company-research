@@ -1,6 +1,0 @@
-﻿  alphatree.cpp
-C:\Users\Siebert\Documents\In-company-research\In-company-research\ConsoleApplication4\ConsoleApplication4\alphatree.cpp(135,9): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'unsigned __int64'
-C:\Users\Siebert\Documents\In-company-research\In-company-research\ConsoleApplication4\ConsoleApplication4\alphatree.cpp(135,9): message : consider using '%zd' in the format string
-C:\Users\Siebert\Documents\In-company-research\In-company-research\ConsoleApplication4\ConsoleApplication4\alphatree.cpp(273,14): warning C4244: 'return': conversion from 'double' to 'int', possible loss of data
-C:\Users\Siebert\Documents\In-company-research\In-company-research\ConsoleApplication4\ConsoleApplication4\alphatree.cpp(98): warning C4715: 'AlphaTree::findRoot': not all control paths return a value
-  ConsoleApplication4.vcxproj -> C:\Users\Siebert\Documents\In-company-research\In-company-research\ConsoleApplication4\Alphatree.exe
