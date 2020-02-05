@@ -84,7 +84,7 @@ void AlphaTree::doAlphaStep(int image_height, int image_width, bool initialize) 
 		else break;
 	}
 	printf("--------[Dissies: %d]--------\n", dissimilarity.size());
-	//findTrafficSigns(image_height, image_width);
+	findTrafficSigns(image_height, image_width);
 	if (dissimilarity.size() == 0) this->bottomReached = true;
 	else this->bottomReached = false;
 	alphaLevel++;
