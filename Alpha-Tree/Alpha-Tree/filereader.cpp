@@ -11,7 +11,7 @@ using namespace cv;
 
 FileReader::FileReader() {
 
-	Mat gabor = imread("traffic_sign_real_life_example.png", 1);
+	Mat gabor = imread("test_d60_10.png", 1);
 
 	if (!gabor.data) {
 		//printf("%d \n", img[0][0])
@@ -21,6 +21,7 @@ FileReader::FileReader() {
 	printf("Reading Image ... \n");
 
 	Mat img = this->applyGaborFilter(gabor);
+	//Mat img = gabor;
 	this->imageHeight = img.rows;
 	this->imageWidth = img.cols;
 	printf("height: %d \n", this->imageHeight);
@@ -49,34 +50,19 @@ FileReader::FileReader() {
 
 }
 
-/*void FileReader::gaborFiltering(Mat img) {
-
-	Mat image(img.rows, img.cols, CV_32F);
-	for (int i = 0; i < image.rows; ++i)
-		for (int j = 0; j < image.cols; ++j) {
-			float z = this->pixelObjArray[i][j][0];
-			image.at<float>(i, j) = floor(z);
-		}
-
-
-	printf("--------[Value: %.6f]--------\n", image.at<float>(0, 0));
-	
-	applyGaborFilter(img);
-}*/
-
 Mat FileReader::applyGaborFilter(Mat img){
 	cv::Mat grey_scale_image;
 	//img.convertTo(grey_scale_image, CV_32F, 1.0 / 255, 0);
 	
-	Mat kernel1 = cv::getGaborKernel(Size(2, 2), 0.56, 30, 3, 0.5, 0);
+	Mat kernel1 = cv::getGaborKernel(Size(2, 2), 0.56, 60, 3, 0.5, 0);
 	Mat kernel2 = cv::getGaborKernel(Size(2, 2), 0.56, 0, 3, 0.5, 0);
-	Mat kernel3 = cv::getGaborKernel(Size(2, 2), 0.56, -30, 3, 0.5, 0);
+	Mat kernel3 = cv::getGaborKernel(Size(2, 2), 0.56, -60, 3, 0.5, 0);
 	Mat dest1;
 	Mat dest2;
 	Mat dest3;
-	filter2D(img, dest1, CV_8UC3, kernel1);
-	filter2D(dest1, dest2, CV_8UC3, kernel2);
-	filter2D(dest2, dest3, CV_8UC3, kernel3);
+	//filter2D(img, dest1, CV_8UC3, kernel1);
+	filter2D(img, dest3, CV_8UC3, kernel2);
+	//filter2D(img, dest3, CV_8UC3, kernel3);
 
 	//cv::imshow("test", dest1);
 	//cv::imshow("test", dest2);

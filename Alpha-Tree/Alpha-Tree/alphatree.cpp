@@ -202,7 +202,7 @@ void AlphaTree::findTrafficSigns(int height, int width) {
 
 			printf("PercentageRed: %lf, PercentageWhite: %lf \n", percentageRed, percentageWhite);
 
-			if (percentageRed <= 0.5 && percentageRed >= 0.2 && percentageWhite >= 0.2 && percentageWhite <= 0.6) {
+			if (percentageRed <= 0.5 && percentageRed >= 0.01 && percentageWhite >= 0.01 && percentageWhite <= 0.99) {
 				printf("Traffic sign found");
 
 				cv::Mat image(diff, diff, CV_8UC3, Scalar(0, 0, 0));
